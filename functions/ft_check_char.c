@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:03:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/14 13:29:11 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2024/11/15 22:51:03 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,10 @@ int	ft_check_char(const char *s, va_list args)
 		cnt += ft_putunbr_base_fd(va_arg(args, unsigned), 1, UP_HEX, 16);
 	else if (*s == '%')
 		cnt += ft_putchar_fd('%', 1);
+	else
+	{
+		cnt += ft_putchar_fd('%', 1);
+		cnt += ft_putchar_fd(*s, 1);
+	}
 	return (cnt);
 }

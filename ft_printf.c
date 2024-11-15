@@ -6,11 +6,12 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 19:22:37 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/14 13:47:39 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2024/11/15 23:03:10 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 int	ft_printf(const char *s, ...)
 {
@@ -27,11 +28,13 @@ int	ft_printf(const char *s, ...)
 	{
 		if (s[var] != '%' && s[var] != '\0')
 			cnt += ft_putchar_fd(s[var], 1);
-		else
+		else if (s[var + 1] != '\0')
 		{
 			var++;
 			cnt += ft_check_char(&s[var], args);
 		}
+		else
+			cnt += ft_putchar_fd('%', 1);
 		var++;
 	}
 	va_end(args);
@@ -40,7 +43,7 @@ int	ft_printf(const char *s, ...)
 
 /*int main()
 {
-	ft_printf("%d\n", ft_printf(NULL));
-	printf("%d\n", printf(NULL));
+	ft_printf("  %s%y %", "asa", "sas");
+	printf("\n  %s%y %", "asa", "sas");
 	//printf("%u", -1);
 }*/
