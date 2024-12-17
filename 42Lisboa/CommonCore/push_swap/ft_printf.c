@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 19:22:37 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/18 15:01:15 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2024/12/17 21:09:44 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <stdio.h>
+#include "push_swap.h"
 
 int	ft_printf(const char *s, ...)
 {
@@ -41,8 +40,31 @@ int	ft_printf(const char *s, ...)
 	return (cnt);
 }
 
-/* int main()
+int	ft_check_char(const char *s, va_list args)
 {
-	ft_printf("%d\n", ft_printf("NULL"));
-	printf("%d\n", printf("NULL"));
-} */
+	int	cnt;
+
+	cnt = 0;
+	if (*s == 'c')
+		cnt += ft_putchar_fd(va_arg(args, int), 1);
+	else if (*s == 's')
+		cnt += ft_putstr_fd(va_arg(args, char *), 1);
+	else if (*s == 'p')
+		cnt += ft_putptr_fd(va_arg(args, void *), 1, LC_HEX, 16);
+	else if (*s == 'd' || *s == 'i')
+		cnt += ft_putnbr_base_fd(va_arg(args, int), 1, DEC, 10);
+	else if (*s == 'u')
+		cnt += ft_putunbr_base_fd(va_arg(args, unsigned), 1, DEC, 10);
+	else if (*s == 'x')
+		cnt += ft_putunbr_base_fd(va_arg(args, unsigned), 1, LC_HEX, 16);
+	else if (*s == 'X')
+		cnt += ft_putunbr_base_fd(va_arg(args, unsigned), 1, UP_HEX, 16);
+	else if (*s == '%')
+		cnt += ft_putchar_fd('%', 1);
+	else
+	{
+		cnt += ft_putchar_fd('%', 1);
+		cnt += ft_putchar_fd(*s, 1);
+	}
+	return (cnt);
+}

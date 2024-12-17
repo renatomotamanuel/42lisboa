@@ -1,19 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 16:03:47 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/06 17:47:27 by rmota-ma         ###   ########.fr       */
+/*   Created: 2024/12/17 20:57:21 by scorpot           #+#    #+#             */
+/*   Updated: 2024/12/17 20:59:33 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
-{
-	del(lst->content);
-	free (lst);
-}
+#include "push_swap.c"

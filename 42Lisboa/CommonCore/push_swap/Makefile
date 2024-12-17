@@ -3,35 +3,33 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/11/08 17:45:51 by rmota-ma          #+#    #+#              #
-#    Updated: 2024/11/14 13:31:02 by rmota-ma         ###   ########.fr        #
+#    Created: 2024/12/13 16:07:13 by scorpot           #+#    #+#              #
+#    Updated: 2024/12/17 20:59:44 by scorpot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-SRCS =	ft_printf.c functions/ft_putchar_fd.c functions/ft_putunbr_base_fd.c\
-		functions/ft_putstr_fd.c functions/ft_putptr_fd.c\
-		functions/ft_check_char.c functions/ft_putnbr_base_fd.c\
+SRCS =	ft_printf.c ft_printf_utils.c main.c ft_split.c
 		
 OBJS = $(SRCS:.c=.o)
 
 .c.o:
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	sudo $(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	sudo $(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	rm -f $(OBJS)
+	sudo rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	sudo rm -f $(NAME)
 
 re: fclean all
 
