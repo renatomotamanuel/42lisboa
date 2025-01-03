@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:50:11 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/12/17 18:34:12 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/01/03 17:43:38 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,12 @@
 # define UP_HEX "0123456789ABCDEF"
 # define DEC "0123456789"
 
-typedef struct s_stack_node
+typedef struct s_list
 {
-	int		nbr;
-	int		index;
-	int		push_cost;
-	bool	above_median;
-	bool	cheapest;
-	struct s_stack_node	*target_node;
-	struct s_stack_node	*next;
-	struct s_stack_node	*prev;
-}	t_stack_node;
+	int 			nbr;
+	struct s_list	*next;
+	struct s_list	*prev;
+}	t_list;
 
 int		ft_printf(const char *s, ...);
 int		ft_putchar_fd(int c, int fd);
@@ -44,6 +39,10 @@ int		ft_putperc_fd(int fd);
 int		ft_check_char(const char *s, va_list args);
 int		ft_putnbr_base_fd(int n, int fd, char *base, int bs);
 int		ft_putptr_fd(void *n, int fd, char *base, unsigned int bs);
-char	**ft_split(char *s, char c);
+char	**ft_split(char const *s, char c);
+size_t	ft_strlen(const char *str);
+void	*ft_calloc(size_t nmemb, size_t size);
+int		ft_atoi(const char *str);
+void	ft_bzero(void *s, size_t n);
 
 #endif

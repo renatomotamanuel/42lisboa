@@ -3,33 +3,33 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+         #
+#    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/13 16:07:13 by scorpot           #+#    #+#              #
-#    Updated: 2024/12/17 20:59:44 by scorpot          ###   ########.fr        #
+#    Updated: 2025/01/03 17:44:53 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-SRCS =	ft_printf.c ft_printf_utils.c main.c ft_split.c
+SRCS =	ft_printf.c ft_printf_utils.c main.c ft_split.c mem_utils.c
 		
 OBJS = $(SRCS:.c=.o)
 
 .c.o:
-	sudo $(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	sudo $(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	sudo rm -f $(OBJS)
+	rm -f $(OBJS)
 
 fclean: clean
-	sudo rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

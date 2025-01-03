@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:03:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/12/17 21:10:23 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/01/03 16:22:04 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_putchar_fd(int c, int fd)
 	return (1);
 }
 
-~int	ft_putnbr_base_fd(int n, int fd, char *base, int bs)
+int	ft_putnbr_base_fd(int n, int fd, char *base, int bs)
 {
 	int		cnt;
 	int		mod;
