@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:15:07 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/01/07 15:10:57 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/02/25 21:34:15 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../pipex.h"
 
 static int	ft_count(char *s, char c)
 {
@@ -52,12 +52,12 @@ static char	*ft_write_word(char *str, int start, int end)
 	return (mal);
 }
 
-void	*ft_free(char **strs, int check)
+void	*ft_free(char **strs)
 {
 	int	var;
 
 	var = 0;
-	while (var < check)
+	while (strs[var] != NULL)
 	{
 		free(strs[var]);
 		var++;
@@ -92,7 +92,7 @@ char	**ft_split(char *s, char c)
 		{
 			mal[var2] = ft_write_word(s, srch, var);
 			if (!(mal[var2]))
-				return (ft_free(mal, var2));
+				return (ft_free(mal));
 			srch = -1;
 			var2++;
 		}

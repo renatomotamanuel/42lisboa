@@ -3,43 +3,246 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/02/21 18:06:21 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/02/25 21:37:17 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
-	int pid;
-	int fd[2];
-	char buffer[13];
-	(void)argc;
-	//(void)argv;
-	if(pipe(fd) == -1)
-		return (1);
+	int	fd[2];
+	int	pid1;
+	int	pid2;
 	
-	pid = fork();
-	if(pid == -1)
-		return (1);
-	fd[0] = open(argv[1], O_RDWR);
-	if (pid == 0)
-	{
-		close(fd[0]);
-		write(fd[1], "Hello World", 11);
-		close(fd[1]);
-		return (0);
-	}
-	else
-	{
-		close(fd[1]);
-		read(fd[0], buffer, 13);
-		close(fd[0]);
-		printf("Hello world222 %s\n", buffer);
-		return (0);
-	}
+	if (argc != 5)
+		return(ft_printf("Bad set of args"), 1);
+	if (pipe(fd) == -1)
+		return(ft_printf("Bad pipe"), 1);
+	pid1 = fork();
+	if (pid1 < 0)
+		return(ft_printf("Bad fork"), 1);
+	if (pid1 == 0)
+		child_process(argv, envp, fd);
+	pid2 = fork();
+	if (pid2 < 0)
+		return(ft_printf("Bad fork"), 1);
+	if (pid2 == 0)
+		child_process_2(argv, envp, fd);
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
 	return (0);
 }
+
+void	child_process(char **argv, char **envp, int *fd)
+{
+	int	infile;
+	char *path;
+	char **cmd1;
+
+	
+	cmd1 = ft_split(argv[2], ' ');
+	infile = open(argv[1], O_RDONLY);
+	path = find_path(envp, cmd1[0]);
+	if (path == 0 || infile < 0)
+	{
+		free(path);
+		close(infile);
+		ft_free(cmd1);
+		error_exit();
+	}
+	dup2(fd[1], 1);
+	dup2(infile, 0);
+	close(fd[0]);
+	if (execve(path, cmd1, envp) == -1)
+		error_exit();
+	close(infile);
+	free(path);
+	ft_free(cmd1);
+}
+
+void	child_process_2(char **argv, char **envp, int *fd)
+{
+	int	outfile;
+	char *path;
+	char **cmd1;
+
+	
+	cmd1 = ft_split(argv[3], ' ');
+	path = find_path(envp, cmd1[0]);
+	if (path == 0)
+	{
+		ft_free(cmd1);
+		error_exit();
+	}
+	outfile = open(argv[4], O_WRONLY | O_CREAT, 0644);
+	dup2(fd[0], 0);
+	dup2(outfile, 1);
+	close(fd[1]);
+	if (execve(path, cmd1, envp) == -1)
+		error_exit();
+	close(outfile);
+	free(path);
+	ft_free(cmd1);
+}
+
+char *find_path(char **envp, char *cmd)
+{
+	char **path;
+	char	*line;
+	char	*temp;
+	int	var;
+	
+	var = 0;
+	while (ft_strnstr(envp[var], "PATH", 4) == 0)
+		var++;
+	path = ft_split(envp[var] + 5, ':');
+	var = 0;
+	while (envp[var] != NULL)
+	{
+		temp = ft_strjoin(path[var], "/");
+		line = ft_strjoin(temp, cmd);
+		free(temp);
+		if(access(line, 0) == 0)
+			return (ft_free(path), line);
+		free(line);
+		var++;
+	}
+	ft_free(path);
+	return (0);
+}
+
+void	error_exit(void)
+{
+	perror("Error");
+	exit(1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* int	main(int argc, char **argv)
+{
+	int pid1;
+	int pid2;
+	//int infile;
+	//int outfile;
+	int fd[2];
+	char *temp;
+	char *temp2;
+	int var;
+	var = 3;
+	(void)argc;
+	if (argc != 5)
+		return (1); 
+	if(pipe(fd) == -1)
+		return (1);
+	pid1 = fork();
+	if(pid1 < 0)
+		return (1);
+	if (pid1 == 0)
+	{
+		//infile = open(argv[1], O_RDONLY);
+		temp = argv[1];
+		argv = ft_split(argv[2], ' ');
+		while (var > 0)
+		{
+			argv[var] = argv[var - 1];
+			var--;
+		}
+		var = 0;
+		argv[0] = temp;
+		temp = "/bin/";
+		temp2 = ft_calloc(sizeof(char), ft_strlen(argv[1]) + 5);
+		while (var < 5)
+		{
+			temp2[var] = temp[var];
+			var++;
+		}
+		var = 0;
+		while (argv[1][var] != 0)
+		{
+			temp2[var + 5] = argv[1][var];
+			var++;
+		}
+		argv[1] = temp2;
+		dup2(fd[1], 1);
+		close (fd[0]);
+		close(fd[1]);
+		execve(argv[1], argv, NULL);
+		return 0;
+	}
+	pid2 = fork();
+	if(pid2 < 0)
+		return (1);
+	if (pid2 == 0)
+	{
+		argv = ft_split(argv[3], ' ');
+		temp = "/bin/";
+		temp2 = ft_calloc(sizeof(char), ft_strlen(argv[0]) + 5);
+		var = 0;
+		while (var < 5)
+		{
+			temp2[var] = temp[var];
+			var++;
+		}
+		var = 0;
+		while (argv[0][var] != 0)
+		{
+			temp2[var + 5] = argv[0][var];
+			var++;
+		}
+		argv[0] = temp2;
+		dup2(fd[0], 0);
+		close (fd[0]);
+		close(fd[1]);
+		execve(argv[0], argv, NULL);
+		return 0;
+	}
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+	return (0);
+} */

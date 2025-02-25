@@ -1,16 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   lib_inc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 20:39:57 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/04 18:37:11 by rmota-ma         ###   ########.fr       */
+/*   Created: 2025/02/25 19:37:22 by scorpot           #+#    #+#             */
+/*   Updated: 2025/02/25 20:15:29 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../pipex.h"
+
+char	*ft_strnstr(const char *big, const char *little, size_t len)
+{
+	int		a;
+	size_t	b;
+
+	b = 0;
+	if (little[0] == '\0')
+		return ((char *)big);
+	while (big[b] && b < len)
+	{
+		a = 0;
+		if (big[b] == little[0])
+		{
+			while (big [b + a] == little[a] && little[a] && (b + a) < len)
+				a++;
+			if (little[a] == '\0')
+				return ((char *)big + b);
+		}
+		b++;
+	}
+	return (NULL);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	int	a;
+
+	a = 0;
+	while (str[a] != '\0')
+	{
+		a++;
+	}
+	return (a);
+}
 
 char	*ft_strcpy(char *dest, char *src)
 {
@@ -46,13 +81,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	return (mal);
 }
-
-/*int main()
-{
-	char *s1 = "atuamae";
-	char *s2 = "emmboa";
-	
-	char *mal = ft_strjoin(s1, s2);
-	printf("ft_strjoin: %s\n", mal);
-	free(mal);
-}*/

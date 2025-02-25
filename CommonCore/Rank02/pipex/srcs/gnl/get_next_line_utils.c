@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 20:26:28 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/26 16:19:26 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:16:38 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../../pipex.h"
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
@@ -41,7 +41,7 @@ int	ft_linelen(char *str)
 	return (var);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	char	*mal;
 	int		var;
@@ -69,7 +69,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (mal);
 }
 
-void	ft_free(char *str)
+void	ft_free_buffer(char *str)
 {
 	int	var;
 	int	var2;

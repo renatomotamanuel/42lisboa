@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 20:26:22 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/27 17:27:03 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:16:44 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "../../pipex.h"
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[16][BUFFER_SIZE + 1];
+	static char	buffer[BUFFER_SIZE + 1];
 	char		*line;
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 16)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1023)
 		return (NULL);
-	while (buffer[fd][0] || read(fd, buffer[fd], BUFFER_SIZE) > 0)
+	while (buffer[0] || read(fd, buffer, BUFFER_SIZE) > 0)
 	{
-		line = ft_strjoin(line, buffer[fd]);
+		line = ft_strjoin_gnl(line, buffer);
 		if (!line)
 			return (NULL);
-		ft_free(buffer[fd]);
+		ft_free_buffer(buffer);
 		if (line[ft_linelen(line) - 1] == '\n')
 			return (line);
 	}
