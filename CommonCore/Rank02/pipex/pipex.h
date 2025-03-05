@@ -6,7 +6,7 @@
 /*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:50:11 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/02/25 21:11:32 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/03/03 21:59:02 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #  define BUFFER_SIZE 42
 # endif
 
-//FT_PRINTF
+//PRINTF
 int	ft_printf(const char *s, ...);
 int	ft_putchar_fd(int c, int fd);
 int	ft_putstr_fd(char *s, int fd);
@@ -57,10 +57,18 @@ char	*ft_strcpy(char *dest, char *src);
 char	*ft_strcat(char *dest, char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 
-//SRCS
+//LIB_INC_2
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+
+//PIPEX
 void	child_process(char **argv, char **envp, int *fd);
-char *find_path(char **envp, char *cmd);
+char    *find_path(char **envp, char *cmd);
 void	error_exit(void);
 void	child_process_2(char **argv, char **envp, int *fd);
+
+//PIPEX_BONUS
+void	here_doc(char **argv, char **envp, int argc);
+void	child_here_doc(char **argv, char **envp, int *fd);
+char    *find_path(char **envp, char *cmd);
 
 #endif

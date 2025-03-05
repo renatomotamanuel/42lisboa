@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/02/25 21:37:17 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/02/26 18:15:31 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,127 +122,3 @@ void	error_exit(void)
 	perror("Error");
 	exit(1);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* int	main(int argc, char **argv)
-{
-	int pid1;
-	int pid2;
-	//int infile;
-	//int outfile;
-	int fd[2];
-	char *temp;
-	char *temp2;
-	int var;
-	var = 3;
-	(void)argc;
-	if (argc != 5)
-		return (1); 
-	if(pipe(fd) == -1)
-		return (1);
-	pid1 = fork();
-	if(pid1 < 0)
-		return (1);
-	if (pid1 == 0)
-	{
-		//infile = open(argv[1], O_RDONLY);
-		temp = argv[1];
-		argv = ft_split(argv[2], ' ');
-		while (var > 0)
-		{
-			argv[var] = argv[var - 1];
-			var--;
-		}
-		var = 0;
-		argv[0] = temp;
-		temp = "/bin/";
-		temp2 = ft_calloc(sizeof(char), ft_strlen(argv[1]) + 5);
-		while (var < 5)
-		{
-			temp2[var] = temp[var];
-			var++;
-		}
-		var = 0;
-		while (argv[1][var] != 0)
-		{
-			temp2[var + 5] = argv[1][var];
-			var++;
-		}
-		argv[1] = temp2;
-		dup2(fd[1], 1);
-		close (fd[0]);
-		close(fd[1]);
-		execve(argv[1], argv, NULL);
-		return 0;
-	}
-	pid2 = fork();
-	if(pid2 < 0)
-		return (1);
-	if (pid2 == 0)
-	{
-		argv = ft_split(argv[3], ' ');
-		temp = "/bin/";
-		temp2 = ft_calloc(sizeof(char), ft_strlen(argv[0]) + 5);
-		var = 0;
-		while (var < 5)
-		{
-			temp2[var] = temp[var];
-			var++;
-		}
-		var = 0;
-		while (argv[0][var] != 0)
-		{
-			temp2[var + 5] = argv[0][var];
-			var++;
-		}
-		argv[0] = temp2;
-		dup2(fd[0], 0);
-		close (fd[0]);
-		close(fd[1]);
-		execve(argv[0], argv, NULL);
-		return 0;
-	}
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
-	return (0);
-} */
