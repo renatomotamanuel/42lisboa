@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/13 16:07:13 by scorpot           #+#    #+#              #
-#    Updated: 2025/03/06 15:17:40 by rmota-ma         ###   ########.fr        #
+#    Updated: 2025/03/06 22:25:42 by scorpot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ BNS_OBJ = $(addprefix $(BNS_OBJ_DIR)/, $(BNS_FILES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(SRC_OBJ) $(PF_OBJ) $(GNL_OBJ)
-	@echo "\033[33mCompiling pipex..."
+	@echo "\033[33mCompiling Pipex..."
 	@$(CC) $(CFLAGS) $(SRC_OBJ) $(PF_OBJ) $(GNL_OBJ) -o $(NAME)
 	@echo "\033[33mPipex Compiled!"
 
@@ -63,7 +63,9 @@ $(OBJ_DIR):
 bonus: $(BNS_NAME)
 
 $(BNS_NAME): $(BNS_OBJ) $(BNS_PF_OBJ) $(BNS_GNL_OBJ)
+	@echo "\033[33mCompiling Bonus..."
 	@$(CC) $(CFLAGS) $(BNS_OBJ) $(BNS_PF_OBJ) $(BNS_GNL_OBJ) -o $(BNS_NAME)
+	@echo "\033[33mBonus Compiled!"
 
 $(BNS_OBJ_DIR)/%.o: $(BNS_DIR)/%.c | $(BNS_OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -78,13 +80,15 @@ $(BNS_OBJ_DIR):
 	@mkdir -p $(BNS_OBJ_DIR)
 
 clean:
+	@echo "\033[33mCleaning..."
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(BNS_OBJ_DIR)
+	@echo "\033[33mClean!"
 
 fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(BNS_NAME)
 
-re: fclean all
+re: fclean all bonus
 
 .PHONY: all bonus clean fclean re
