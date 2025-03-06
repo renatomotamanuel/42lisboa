@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+         #
+#    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/13 16:07:13 by scorpot           #+#    #+#              #
-#    Updated: 2025/02/26 18:13:43 by scorpot          ###   ########.fr        #
+#    Updated: 2025/03/06 15:17:40 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC_FILES = pipex.c ft_split.c lib_inc.c
 
 BNS_GNL_FILES = get_next_line.c get_next_line_utils.c
 BNS_PF_FILES = ft_printf.c ft_printf_utils.c
-BNS_FILES = pipex_bns.c ft_split.c lib_inc.c lib_inc_2.c
+BNS_FILES = pipex_bns.c ft_split.c lib_inc.c lib_inc_2.c doc_handle.c pipe_handle.c
 
 PF_OBJ = $(addprefix $(OBJ_DIR)/, $(PF_FILES:.c=.o))
 GNL_OBJ = $(addprefix $(OBJ_DIR)/, $(GNL_FILES:.c=.o))

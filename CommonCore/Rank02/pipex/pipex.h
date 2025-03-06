@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:50:11 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/03 21:59:02 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:25:51 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,18 @@ void	error_exit(void);
 void	child_process_2(char **argv, char **envp, int *fd);
 
 //PIPEX_BONUS
-void	here_doc(char **argv, char **envp, int argc);
-void	child_here_doc(char **argv, char **envp, int *fd);
+int		here_doc_pipe(char **argv, char **envp, int infile, int cmds);
 char    *find_path(char **envp, char *cmd);
+
+//DOC_HANDLE
+void	here_doc(char **argv, char **envp, int cmds);
+void	child_here_doc(char **argv, char **envp, int *fd, int infile);
+void 	print_pipe(int cmds);
+void	last_doc(int **fd, char **argv, char **envp, int cmds);
+
+//PIPE_HANDLE
+void	define_fds(int **fd, int cmds);
+void multiple_pipes(char **argv, char **envp, int **fd, int cmds);
+
 
 #endif

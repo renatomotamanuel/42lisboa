@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/02/26 18:15:31 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:47:00 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	child_process(char **argv, char **envp, int *fd)
 	int	infile;
 	char *path;
 	char **cmd1;
-
 	
 	cmd1 = ft_split(argv[2], ' ');
 	infile = open(argv[1], O_RDONLY);
@@ -72,7 +71,6 @@ void	child_process_2(char **argv, char **envp, int *fd)
 	char *path;
 	char **cmd1;
 
-	
 	cmd1 = ft_split(argv[3], ' ');
 	path = find_path(envp, cmd1[0]);
 	if (path == 0)
@@ -99,11 +97,13 @@ char *find_path(char **envp, char *cmd)
 	int	var;
 	
 	var = 0;
+	if (access(cmd, 0) == 0)
+		return (cmd);
 	while (ft_strnstr(envp[var], "PATH", 4) == 0)
 		var++;
 	path = ft_split(envp[var] + 5, ':');
 	var = 0;
-	while (envp[var] != NULL)
+	while (path[var] != NULL)
 	{
 		temp = ft_strjoin(path[var], "/");
 		line = ft_strjoin(temp, cmd);
@@ -113,7 +113,8 @@ char *find_path(char **envp, char *cmd)
 		free(line);
 		var++;
 	}
-	ft_free(path);
+	if (path)
+		ft_free(path);
 	return (0);
 }
 
