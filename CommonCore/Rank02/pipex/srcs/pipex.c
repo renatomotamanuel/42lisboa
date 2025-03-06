@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/06 15:47:00 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/06 22:34:34 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	fd[2];
 	int	pid1;
-	int	pid2;
+
 	
 	if (argc != 5)
 		return(ft_printf("Bad set of args"), 1);
@@ -27,15 +27,11 @@ int	main(int argc, char **argv, char **envp)
 		return(ft_printf("Bad fork"), 1);
 	if (pid1 == 0)
 		child_process(argv, envp, fd);
-	pid2 = fork();
-	if (pid2 < 0)
-		return(ft_printf("Bad fork"), 1);
-	if (pid2 == 0)
+	else
 		child_process_2(argv, envp, fd);
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
 	return (0);
 }
 
@@ -46,7 +42,7 @@ void	child_process(char **argv, char **envp, int *fd)
 	char **cmd1;
 	
 	cmd1 = ft_split(argv[2], ' ');
-	infile = open(argv[1], O_RDONLY);
+	infile = open(argv[1], O_RDWR | O_CREAT, 0644);
 	path = find_path(envp, cmd1[0]);
 	if (path == 0 || infile < 0)
 	{
@@ -78,7 +74,7 @@ void	child_process_2(char **argv, char **envp, int *fd)
 		ft_free(cmd1);
 		error_exit();
 	}
-	outfile = open(argv[4], O_WRONLY | O_CREAT, 0644);
+	outfile = open(argv[4], O_RDWR | O_CREAT, 0644);
 	dup2(fd[0], 0);
 	dup2(outfile, 1);
 	close(fd[1]);
