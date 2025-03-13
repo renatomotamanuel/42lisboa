@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doc_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:37:27 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/06 22:08:21 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/03/13 13:01:42 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	here_doc(char **argv, int cmds)
 {
-	int fd[2];
-	int pid1;
+	int	fd[2];
+	int	pid1;
 
 	if (pipe(fd) == -1)
 		error_exit();
@@ -37,19 +37,20 @@ void	here_doc(char **argv, int cmds)
 
 void	loop(char **argv, int cmds, int infile)
 {
-	int i;
-	char *line;
-	int len;
+	int		len;
+	int		i;
+	char	*line;
 
 	i = 0;
 	len = ft_strlen(argv[2]);
 	print_pipe(cmds);
-	while(i == 0)
+	while (i == 0)
 	{
 		line = get_next_line(0);
 		if (ft_strncmp(line, argv[2], len) == 0 && line[len] == '\n')
 		{
 			free(line);
+			close(infile);
 			exit(0);
 		}
 		print_pipe(cmds);
@@ -60,23 +61,25 @@ void	loop(char **argv, int cmds, int infile)
 
 void	here_doc_pipe(char **argv, int argc, char **envp)
 {
-	int var;
-	int outfile;
+	int	var;
+	int	outfile;
 
 	var = 3;
 	outfile = open(argv[argc - 1], O_RDWR | O_CREAT, 0644);
+	if (outfile < 0)
+		error_exit();
 	while (var < argc - 2)
 	{
 		pimping(argv[var], envp);
 		var++;
 	}
 	dup2(outfile, 1);
-	process(argv[argc - 2], envp);
+	process(argv[argc - 2], envp, -1);
 }
 
-void print_pipe(int cmds)
+void	print_pipe(int cmds)
 {
-	int var;
+	int	var;
 
 	var = 1;
 	while (var < cmds)

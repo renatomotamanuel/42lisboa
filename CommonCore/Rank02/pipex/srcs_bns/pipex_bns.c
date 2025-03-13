@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bns.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/06 22:21:10 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/03/13 15:31:11 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	int cmds;
-	
+	int	cmds;
+
 	if (argc < 5)
-		return(ft_printf("Bad set of args\n"), 1);
+		return (ft_printf("Bad set of args\n"), 1);
 	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
 	{
 		cmds = argc -4;
@@ -37,13 +37,13 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-char *find_path(char **envp, char *cmd)
+char	*find_path(char **envp, char *cmd)
 {
-	char **path;
+	char	**path;
 	char	*line;
 	char	*temp;
-	int	var;
-	
+	int		var;
+
 	var = 0;
 	if (access(cmd, 0) == 0)
 		return (cmd);
@@ -56,7 +56,7 @@ char *find_path(char **envp, char *cmd)
 		temp = ft_strjoin(path[var], "/");
 		line = ft_strjoin(temp, cmd);
 		free(temp);
-		if(access(line, 0) == 0)
+		if (access(line, 0) == 0)
 			return (ft_free(path), line);
 		free(line);
 		var++;
@@ -69,5 +69,25 @@ char *find_path(char **envp, char *cmd)
 void	error_exit(void)
 {
 	perror("Error");
+	close_fds();
+	exit(1);
+}
+
+void	error_env(char **cmd1)
+{
+	perror("Error");
+	ft_free(cmd1);
+	close_fds();
+	exit(127);
+}
+
+void	error_file(int fd, int fd2)
+{
+	perror("Error");
+	if (fd != -1)
+		close(fd);
+	if (fd2 != -1)
+		close(fd2);
+	close_fds();
 	exit(1);
 }

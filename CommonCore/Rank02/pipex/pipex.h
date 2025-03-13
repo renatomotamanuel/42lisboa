@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:50:11 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/06 22:20:29 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/03/13 15:30:40 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@
 # endif
 
 //PRINTF
-int	ft_printf(const char *s, ...);
-int	ft_putchar_fd(int c, int fd);
-int	ft_putstr_fd(char *s, int fd);
-int	ft_putunbr_base_fd(unsigned long bnb, int fd, char *base, unsigned int bs);
-int	ft_putperc_fd(int fd);
-int	ft_check_char(const char *s, va_list args);
-int	ft_putnbr_base_fd(int n, int fd, char *base, int bs);
-int	ft_putptr_fd(void *n, int fd, char *base, unsigned int bs);
+int		ft_printf(const char *s, ...);
+int		ft_putchar_fd(int c, int fd);
+int		ft_putstr_fd(char *s, int fd);
+int		ft_putunbr_base_fd(unsigned long bnb, int fd,
+			char *base, unsigned int bs);
+int		ft_putperc_fd(int fd);
+int		ft_check_char(const char *s, va_list args);
+int		ft_putnbr_base_fd(int n, int fd, char *base, int bs);
+int		ft_putptr_fd(void *n, int fd, char *base, unsigned int bs);
 
 //GNL
 char	*get_next_line(int fd);
@@ -58,29 +59,36 @@ char	*ft_strcat(char *dest, char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 
 //LIB_INC_2
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //PIPEX
 void	child_process(char **argv, char **envp, int *fd);
-char    *find_path(char **envp, char *cmd);
-void	error_exit(void);
+char	*find_path(char **envp, char *cmd);
 void	child_process_2(char **argv, char **envp, int *fd);
 
-//PIPEX_BONUS
-char    *find_path(char **envp, char *cmd);
+//ERRORS
 void	error_exit(void);
+void	error_env(char **cmd1);
+void	error_file(int fd, int fd2);
+void	close_fds(void);
+
+//PIPEX_BONUS
+char	*find_path(char **envp, char *cmd);
+void	error_exit(void);
+void	error_env(char **cmd1);
+void	error_file(int fd, int fd2);
 
 //DOC_HANDLE
 void	here_doc(char **argv, int cmds);
 void	here_doc_pipe(char **argv, int argc, char **envp);
 void	loop(char **argv, int cmds, int infile);
-void    print_pipe(int cmds);
-
+void	print_pipe(int cmds);
 
 //PIPE_HANDLE
 void	pimping(char *cmd1, char **envp);
-void process(char *argv, char **envp);
+void	process(char *argv, char **envp, int fd);
 void	multiple_pipes(int argc, char **argv, char **envp);
-
+void	last_process(char *argv, char **envp, int outfile);
+void	close_fds(void);
 
 #endif

@@ -1,33 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib_inc_2.c                                        :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 19:37:22 by scorpot           #+#    #+#             */
-/*   Updated: 2025/03/07 11:24:50 by rmota-ma         ###   ########.fr       */
+/*   Created: 2025/03/12 12:29:34 by rmota-ma          #+#    #+#             */
+/*   Updated: 2025/03/13 15:31:41 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	error_exit(void)
 {
-	unsigned int	a;
+	perror("Error");
+	close_fds();
+	exit(1);
+}
 
-	a = 0;
-	while ((a < n) && (s1[a]) && (s2[a]))
+void	error_env(char **cmd1)
+{
+	perror("Error");
+	ft_free(cmd1);
+	close_fds();
+	exit(127);
+}
+
+void	error_file(int fd, int fd2)
+{
+	perror("Error");
+	if (fd != -1)
+		close(fd);
+	if (fd2 != -1)
+		close(fd);
+	close_fds();
+	exit(1);
+}
+
+void	close_fds(void)
+{
+	int	var;
+
+	var = 3;
+	while (var < 1024)
 	{
-		if (s1[a] != s2[a])
-		{
-			return ((unsigned char)s1[a] - (unsigned char)s2[a]);
-		}
-		a++;
+		close(var);
+		var++;
 	}
-	if (a < n)
-	{
-		return ((unsigned char)s1[a] - (unsigned char)s2[a]);
-	}
-	return (0);
 }

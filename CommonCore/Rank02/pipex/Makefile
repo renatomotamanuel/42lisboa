@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+         #
+#    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/13 16:07:13 by scorpot           #+#    #+#              #
-#    Updated: 2025/03/06 22:25:42 by scorpot          ###   ########.fr        #
+#    Updated: 2025/03/12 15:29:28 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ BNS_GNL_DIR = gnl
 
 GNL_FILES = get_next_line.c get_next_line_utils.c
 PF_FILES = ft_printf.c ft_printf_utils.c
-SRC_FILES = pipex.c ft_split.c lib_inc.c
+SRC_FILES = pipex.c ft_split.c lib_inc.c errors.c
 
 BNS_GNL_FILES = get_next_line.c get_next_line_utils.c
 BNS_PF_FILES = ft_printf.c ft_printf_utils.c
@@ -41,7 +41,7 @@ BNS_PF_OBJ = $(addprefix $(BNS_OBJ_DIR)/, $(PF_FILES:.c=.o))
 BNS_GNL_OBJ = $(addprefix $(BNS_OBJ_DIR)/, $(GNL_FILES:.c=.o))
 BNS_OBJ = $(addprefix $(BNS_OBJ_DIR)/, $(BNS_FILES:.c=.o))
 
-all: $(NAME)
+all: $(NAME) bonus
 
 $(NAME): $(SRC_OBJ) $(PF_OBJ) $(GNL_OBJ)
 	@echo "\033[33mCompiling Pipex..."
