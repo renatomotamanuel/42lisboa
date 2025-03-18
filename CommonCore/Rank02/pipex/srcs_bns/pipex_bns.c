@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/13 15:31:11 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:24:27 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,27 @@
 int	main(int argc, char **argv, char **envp)
 {
 	int	cmds;
-
+	int code;
+	int *pids;
+	
+	code = 0;
 	if (argc < 5)
 		return (ft_printf("Bad set of args\n"), 1);
 	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
 	{
 		cmds = argc -4;
 		if (argc < 6)
-		{
-			ft_printf("Bad set of args\n");
-			exit(1);
-		}
+			return (ft_printf("Bad set of args\n"), 1);
+		pids = ft_calloc(cmds, sizeof(int));
 		here_doc(argv, cmds);
-		here_doc_pipe(argv, argc, envp);
+		code = here_doc_pipe(argv, argc, envp, pids);
 	}
 	else
 	{
-		cmds = argc - 3;
-		multiple_pipes(argc, argv, envp);
+		pids = ft_calloc(argc - 3, sizeof(int));
+		code = multiple_pipes(argc, argv, envp, pids);
 	}
-	return (0);
+	return (code / 256);
 }
 
 char	*find_path(char **envp, char *cmd)
@@ -47,9 +48,11 @@ char	*find_path(char **envp, char *cmd)
 	var = 0;
 	if (access(cmd, 0) == 0)
 		return (cmd);
-	while (ft_strnstr(envp[var], "PATH", 4) == 0)
+	while (ft_strnstr(envp[var], "PATH", 4) == 0 && envp[var + 1])
 		var++;
-	path = ft_split(envp[var] + 5, ':');
+	if (!envp[var + 1])
+		return (0);
+	path = ft_split(envp[var] + 5, ':', 0, 0);
 	var = 0;
 	while (path[var] != NULL)
 	{
@@ -61,33 +64,5 @@ char	*find_path(char **envp, char *cmd)
 		free(line);
 		var++;
 	}
-	if (path)
-		ft_free(path);
-	return (NULL);
-}
-
-void	error_exit(void)
-{
-	perror("Error");
-	close_fds();
-	exit(1);
-}
-
-void	error_env(char **cmd1)
-{
-	perror("Error");
-	ft_free(cmd1);
-	close_fds();
-	exit(127);
-}
-
-void	error_file(int fd, int fd2)
-{
-	perror("Error");
-	if (fd != -1)
-		close(fd);
-	if (fd2 != -1)
-		close(fd2);
-	close_fds();
-	exit(1);
+	return (ft_free(path), NULL);
 }

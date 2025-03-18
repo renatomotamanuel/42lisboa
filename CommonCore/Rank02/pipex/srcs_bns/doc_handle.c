@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:37:27 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/13 13:01:42 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:42:50 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	here_doc(char **argv, int cmds)
 	int	pid1;
 
 	if (pipe(fd) == -1)
-		error_exit();
+		error();
 	pid1 = fork();
 	if (pid1 < 0)
-		error_exit();
+		error();
 	if (pid1 == 0)
 	{
 		close(fd[0]);
@@ -33,6 +33,7 @@ void	here_doc(char **argv, int cmds)
 		dup2(fd[0], 0);
 		wait(NULL);
 	}
+	close_fds();
 }
 
 void	loop(char **argv, int cmds, int infile)
@@ -59,22 +60,33 @@ void	loop(char **argv, int cmds, int infile)
 	}
 }
 
-void	here_doc_pipe(char **argv, int argc, char **envp)
+int	here_doc_pipe(char **argv, int argc, char **envp, int *pids)
 {
 	int	var;
+	int	var2;
 	int	outfile;
+	int pid1;
+	int	code;
 
 	var = 3;
+	var2 = 0;
+	code = 0;
 	outfile = open(argv[argc - 1], O_RDWR | O_CREAT, 0644);
 	if (outfile < 0)
-		error_exit();
+		error();
 	while (var < argc - 2)
 	{
-		pimping(argv[var], envp);
+		pids[var2] = pimping(argv[var], envp);
 		var++;
+		var2++;
 	}
 	dup2(outfile, 1);
-	process(argv[argc - 2], envp, -1);
+	pid1 = fork();
+	if (pid1 == 0)
+		process(argv[argc - 2], envp);
+	pids[var2] = pid1;
+	code = waitpids(pids, argc - 4);
+	return (code);
 }
 
 void	print_pipe(int cmds)

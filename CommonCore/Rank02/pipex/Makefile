@@ -6,7 +6,7 @@
 #    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/13 16:07:13 by scorpot           #+#    #+#              #
-#    Updated: 2025/03/12 15:29:28 by rmota-ma         ###   ########.fr        #
+#    Updated: 2025/03/18 18:23:19 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC_FILES = pipex.c ft_split.c lib_inc.c errors.c
 
 BNS_GNL_FILES = get_next_line.c get_next_line_utils.c
 BNS_PF_FILES = ft_printf.c ft_printf_utils.c
-BNS_FILES = pipex_bns.c ft_split.c lib_inc.c lib_inc_2.c doc_handle.c pipe_handle.c
+BNS_FILES = pipex_bns.c ft_split.c lib_inc.c lib_inc_2.c doc_handle.c pipe_handle.c errors.c
 
 PF_OBJ = $(addprefix $(OBJ_DIR)/, $(PF_FILES:.c=.o))
 GNL_OBJ = $(addprefix $(OBJ_DIR)/, $(GNL_FILES:.c=.o))

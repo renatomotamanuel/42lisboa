@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:50:11 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/13 15:30:40 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:10:31 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	ft_free_buffer(char *str);
 void	ft_bzero(void *s, size_t n);
 
 //SPLIT
-char	**ft_split(char *s, char c);
+char	**ft_split(char *s, char c, size_t var, int var2);
 void	*ft_free(char **strs);
+int check_plica(char *s);
+void cut_word(char *s, size_t *var);
 
 //LIB_INC
 size_t	ft_strlen(const char *str);
@@ -67,28 +69,25 @@ char	*find_path(char **envp, char *cmd);
 void	child_process_2(char **argv, char **envp, int *fd);
 
 //ERRORS
-void	error_exit(void);
+void	error(void);
 void	error_env(char **cmd1);
-void	error_file(int fd, int fd2);
 void	close_fds(void);
+void	execve_error(char *path, char **cmd1);
 
 //PIPEX_BONUS
 char	*find_path(char **envp, char *cmd);
-void	error_exit(void);
-void	error_env(char **cmd1);
-void	error_file(int fd, int fd2);
 
 //DOC_HANDLE
 void	here_doc(char **argv, int cmds);
-void	here_doc_pipe(char **argv, int argc, char **envp);
+int		here_doc_pipe(char **argv, int argc, char **envp, int *pids);
 void	loop(char **argv, int cmds, int infile);
 void	print_pipe(int cmds);
 
 //PIPE_HANDLE
-void	pimping(char *cmd1, char **envp);
-void	process(char *argv, char **envp, int fd);
-void	multiple_pipes(int argc, char **argv, char **envp);
-void	last_process(char *argv, char **envp, int outfile);
-void	close_fds(void);
+int	pimping(char *cmd1, char **envp);
+void	process(char *argv, char **envp);
+int		multiple_pipes(int argc, char **argv, char **envp, int *pids);
+int	last_process(char *argv, char **envp, int argc, int *pids);
+int 	waitpids(int *pids, int argc);
 
 #endif

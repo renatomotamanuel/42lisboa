@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/13 11:55:14 by rmota-ma         ###   ########.fr       */
+/*   Created: 2025/03/17 12:49:46 by rmota-ma          #+#    #+#             */
+/*   Updated: 2025/03/18 15:46:55 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,26 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	fd[2];
 	int	pid1;
+	int	pid2;
+	int code;
 
+	code = 0;
 	if (argc != 5)
 		return (ft_printf("Bad set of args"), 1);
 	if (pipe(fd) == -1)
-		return (ft_printf("Bad pipe"), 1);
+		error();
 	pid1 = fork();
 	if (pid1 < 0)
-		return (ft_printf("Bad fork"), 1);
+		error();
 	if (pid1 == 0)
 		child_process(argv, envp, fd);
-	else
+	pid2 = fork();
+	if (pid2 == 0)
 		child_process_2(argv, envp, fd);
-	close(fd[0]);
-	close(fd[1]);
+	close_fds();
 	waitpid(pid1, NULL, 0);
-	return (0);
+	waitpid(pid2, &code, 0);
+	return (code / 256);
 }
 
 void	child_process(char **argv, char **envp, int *fd)
@@ -40,24 +44,23 @@ void	child_process(char **argv, char **envp, int *fd)
 	char	*path;
 	char	**cmd1;
 
-	cmd1 = ft_split(argv[2], ' ');
+	cmd1 = NULL;
+	if (!argv[2][0])
+		error_env(cmd1);
 	infile = open(argv[1], O_RDWR);
 	if (infile < 0)
-		error_file(-1, infile);
+		error();
+	cmd1 = ft_split(argv[2], ' ', 0, 0);
+	if (!cmd1)
+		error();
 	path = find_path(envp, cmd1[0]);
 	if (path == 0)
-	{
-		close(infile);
 		error_env(cmd1);
-	}
 	dup2(fd[1], 1);
 	dup2(infile, 0);
-	close(fd[0]);
+	close_fds();
 	if (execve(path, cmd1, envp) == -1)
-		error_exit();
-	close(infile);
-	free(path);
-	ft_free(cmd1);
+		execve_error(path, cmd1);
 }
 
 void	child_process_2(char **argv, char **envp, int *fd)
@@ -66,24 +69,23 @@ void	child_process_2(char **argv, char **envp, int *fd)
 	char	*path;
 	char	**cmd1;
 
+	cmd1 = NULL;
+	if (!argv[3][0])
+		error_env(cmd1);
 	outfile = open(argv[4], O_RDWR | O_CREAT, 0644);
 	if (outfile < 0)
-		error_file(-1, outfile);
-	cmd1 = ft_split(argv[3], ' ');
+		error();
+	cmd1 = ft_split(argv[3], ' ', 0, 0);
+	if (!cmd1)
+		error();
 	path = find_path(envp, cmd1[0]);
 	if (path == 0)
-	{
-		close(outfile);
 		error_env(cmd1);
-	}
 	dup2(fd[0], 0);
 	dup2(outfile, 1);
-	close(fd[1]);
+	close_fds();
 	if (execve(path, cmd1, envp) == -1)
-		error_exit();
-	close(outfile);
-	free(path);
-	ft_free(cmd1);
+		execve_error(path, cmd1);
 }
 
 char	*find_path(char **envp, char *cmd)
@@ -100,7 +102,7 @@ char	*find_path(char **envp, char *cmd)
 		var++;
 	if (!envp[var + 1])
 		return (0);
-	path = ft_split(envp[var] + 5, ':');
+	path = ft_split(envp[var] + 5, ':', 0, 0);
 	var = 0;
 	while (path[var] != NULL)
 	{
