@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:50:11 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/18 18:10:31 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:51:36 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	ft_bzero(void *s, size_t n);
 //SPLIT
 char	**ft_split(char *s, char c, size_t var, int var2);
 void	*ft_free(char **strs);
-int check_plica(char *s);
-void cut_word(char *s, size_t *var);
+int		check_plica(char *s);
+void	cut_word(char *s, size_t *var);
 
 //LIB_INC
 size_t	ft_strlen(const char *str);
@@ -78,16 +78,16 @@ void	execve_error(char *path, char **cmd1);
 char	*find_path(char **envp, char *cmd);
 
 //DOC_HANDLE
-void	here_doc(char **argv, int cmds);
+int	here_doc(char **argv, char**envp, int argc, int *pids);
 int		here_doc_pipe(char **argv, int argc, char **envp, int *pids);
 void	loop(char **argv, int cmds, int infile);
 void	print_pipe(int cmds);
 
 //PIPE_HANDLE
-int	pimping(char *cmd1, char **envp);
+int	multiple_pipes(int argc, char **argv, char **envp, int *pids);
+int		pimping(char *cmd1, char **envp, int *pids);
 void	process(char *argv, char **envp);
-int		multiple_pipes(int argc, char **argv, char **envp, int *pids);
-int	last_process(char *argv, char **envp, int argc, int *pids);
-int 	waitpids(int *pids, int argc);
-
+void	 waitpids(int *pids, int argc);
+void	last_process(char **argv, char **envp, int argc);
+int		parent(int argc, char **argv, char **envp, int *pids);
 #endif

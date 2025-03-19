@@ -6,13 +6,13 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:37:27 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/18 17:42:50 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:58:11 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	here_doc(char **argv, int cmds)
+int	here_doc(char **argv, char**envp, int argc, int *pids)
 {
 	int	fd[2];
 	int	pid1;
@@ -25,7 +25,8 @@ void	here_doc(char **argv, int cmds)
 	if (pid1 == 0)
 	{
 		close(fd[0]);
-		loop(argv, cmds, fd[1]);
+		free(pids);
+		loop(argv, argc, fd[1]);
 	}
 	else
 	{
@@ -34,6 +35,36 @@ void	here_doc(char **argv, int cmds)
 		wait(NULL);
 	}
 	close_fds();
+	return (here_doc_pipe(argv, argc + 4, envp, pids));
+}
+
+int	here_doc_pipe(char **argv, int argc, char **envp, int *pids)
+{
+	int pid1;
+	int	var;
+	int var2;
+
+	var = 3;
+	var2 = 0;
+	while (var < argc - 2)
+	{
+		pids[var2] = pimping(argv[var], envp, pids);
+		var++;
+		var2++;
+	}
+	pid1 = fork();
+	if (pid1 < 0)
+		error();
+	if (pid1 == 0)
+	{
+		free(pids);
+		last_process(argv, envp, argc);
+	}
+	var2 = 0;
+	close_fds();
+	waitpids(pids, argc - 5);
+	waitpid(pid1, &var2, 0);
+	return (var2);
 }
 
 void	loop(char **argv, int cmds, int infile)
@@ -58,35 +89,6 @@ void	loop(char **argv, int cmds, int infile)
 		write(infile, line, ft_strlen(line));
 		free(line);
 	}
-}
-
-int	here_doc_pipe(char **argv, int argc, char **envp, int *pids)
-{
-	int	var;
-	int	var2;
-	int	outfile;
-	int pid1;
-	int	code;
-
-	var = 3;
-	var2 = 0;
-	code = 0;
-	outfile = open(argv[argc - 1], O_RDWR | O_CREAT, 0644);
-	if (outfile < 0)
-		error();
-	while (var < argc - 2)
-	{
-		pids[var2] = pimping(argv[var], envp);
-		var++;
-		var2++;
-	}
-	dup2(outfile, 1);
-	pid1 = fork();
-	if (pid1 == 0)
-		process(argv[argc - 2], envp);
-	pids[var2] = pid1;
-	code = waitpids(pids, argc - 4);
-	return (code);
 }
 
 void	print_pipe(int cmds)

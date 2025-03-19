@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/18 18:24:27 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:36:55 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ int	main(int argc, char **argv, char **envp)
 		cmds = argc -4;
 		if (argc < 6)
 			return (ft_printf("Bad set of args\n"), 1);
-		pids = ft_calloc(cmds, sizeof(int));
-		here_doc(argv, cmds);
-		code = here_doc_pipe(argv, argc, envp, pids);
+		pids = ft_calloc(cmds - 1, sizeof(int));
+		code = here_doc(argv, envp, cmds, pids);
 	}
 	else
 	{
-		pids = ft_calloc(argc - 3, sizeof(int));
+		pids = ft_calloc(argc - 4, sizeof(int));
 		code = multiple_pipes(argc, argv, envp, pids);
 	}
+	if (pids)
+		free(pids);
 	return (code / 256);
 }
 
