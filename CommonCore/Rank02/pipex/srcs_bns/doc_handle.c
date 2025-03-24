@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:37:27 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/19 16:58:11 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:39:11 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	here_doc(char **argv, char**envp, int argc, int *pids)
 
 int	here_doc_pipe(char **argv, int argc, char **envp, int *pids)
 {
-	int pid1;
+	int	pid1;
 	int	var;
-	int var2;
+	int	var2;
 
 	var = 3;
 	var2 = 0;
@@ -58,7 +58,7 @@ int	here_doc_pipe(char **argv, int argc, char **envp, int *pids)
 	if (pid1 == 0)
 	{
 		free(pids);
-		last_process(argv, envp, argc);
+		last_process(argv, envp, argc, 0);
 	}
 	var2 = 0;
 	close_fds();

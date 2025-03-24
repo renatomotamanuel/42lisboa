@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 17:50:11 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/19 16:51:36 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:35:49 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,17 @@ void	execve_error(char *path, char **cmd1);
 char	*find_path(char **envp, char *cmd);
 
 //DOC_HANDLE
-int	here_doc(char **argv, char**envp, int argc, int *pids);
+int		here_doc(char **argv, char**envp, int argc, int *pids);
 int		here_doc_pipe(char **argv, int argc, char **envp, int *pids);
 void	loop(char **argv, int cmds, int infile);
 void	print_pipe(int cmds);
 
 //PIPE_HANDLE
-int	multiple_pipes(int argc, char **argv, char **envp, int *pids);
+int		multiple_pipes(int argc, char **argv, char **envp, int *pids);
 int		pimping(char *cmd1, char **envp, int *pids);
 void	process(char *argv, char **envp);
-void	 waitpids(int *pids, int argc);
-void	last_process(char **argv, char **envp, int argc);
+void	waitpids(int *pids, int argc);
+void	last_process(char **argv, char **envp, int argc, int perm);
 int		parent(int argc, char **argv, char **envp, int *pids);
+void	first_process(char **argv, char **envp, int *fd);
 #endif

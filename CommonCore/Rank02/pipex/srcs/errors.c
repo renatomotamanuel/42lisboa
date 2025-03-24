@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:50:29 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/19 11:50:51 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:38:35 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ void	error_env(char **cmd1)
 void	execve_error(char *path, char **cmd1)
 {
 	perror("Error");
+	if (!cmd1[1])
+		free(cmd1);
+	else
+		ft_free(cmd1);
 	if (path)
 		free(path);
-	if (cmd1)
-		ft_free(cmd1);
 	close_fds();
-	exit(1);
+	exit(127);
 }
 
 void	close_fds(void)
@@ -49,4 +51,11 @@ void	close_fds(void)
 		close(var);
 		var++;
 	}
+}
+
+void	cut_word(char *s, size_t *var)
+{
+	*var += 1;
+	while (s[*var] != 39)
+		*var += 1;
 }

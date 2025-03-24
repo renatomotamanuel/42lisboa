@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:36:34 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/19 16:36:55 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:39:49 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	main(int argc, char **argv, char **envp)
 {
 	int	cmds;
-	int code;
-	int *pids;
-	
+	int	code;
+	int	*pids;
+
 	code = 0;
 	if (argc < 5)
 		return (ft_printf("Bad set of args\n"), 1);
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		cmds = argc -4;
 		if (argc < 6)
 			return (ft_printf("Bad set of args\n"), 1);
-		pids = ft_calloc(cmds - 1, sizeof(int));
+		pids = ft_calloc(cmds, sizeof(int));
 		code = here_doc(argv, envp, cmds, pids);
 	}
 	else
@@ -47,12 +47,10 @@ char	*find_path(char **envp, char *cmd)
 	int		var;
 
 	var = 0;
-	if (access(cmd, 0) == 0)
-		return (cmd);
 	while (ft_strnstr(envp[var], "PATH", 4) == 0 && envp[var + 1])
 		var++;
 	if (!envp[var + 1])
-		return (0);
+		return (cmd);
 	path = ft_split(envp[var] + 5, ':', 0, 0);
 	var = 0;
 	while (path[var] != NULL)
@@ -65,5 +63,31 @@ char	*find_path(char **envp, char *cmd)
 		free(line);
 		var++;
 	}
-	return (ft_free(path), NULL);
+	return (ft_free(path), cmd);
+}
+
+int	check_plica(char *s)
+{
+	int	check;
+	int	var;
+
+	var = 0;
+	check = 0;
+	while (s[var])
+	{
+		if (s[var] == 39)
+			check++;
+		var++;
+	}
+	if (check == 2)
+		return (0);
+	else
+		return (1);
+}
+
+void	cut_word(char *s, size_t *var)
+{
+	*var += 1;
+	while (s[*var] != 39)
+		*var += 1;
 }
