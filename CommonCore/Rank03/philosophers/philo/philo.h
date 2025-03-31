@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:25:51 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/31 18:16:36 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/31 23:11:26 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,23 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <limits.h>
+# include <sys/time.h>
+
+typedef struct s_philo
+{
+	pthread_t	*thread;
+	pthread_mutex_t	mutex;
+	long			*args;
+	int *start;
+}				t_philo;
 
 //MAIN.C
 int	error_syntax(char **argv, int var);
-int teste(void);
-void* deposit(void *amount);
-int read_balance();
-void write_balance(int new_balance);
 
 //LIB_INC.C
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *s, size_t n);
 long	ft_atol(char *str);
+t_philo *philo(void);
+
 #endif

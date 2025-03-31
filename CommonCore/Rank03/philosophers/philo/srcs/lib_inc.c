@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_inc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:47:59 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/31 15:54:22 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/03/31 22:57:55 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,11 @@ void	ft_bzero(void *s, size_t n)
 		str[var] = '\0';
 		var++;
 	}
+}
+
+t_philo *philo(void)
+{
+	static t_philo	philo;
+
+	return (&philo);
 }
