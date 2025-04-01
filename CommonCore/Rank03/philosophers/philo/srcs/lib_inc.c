@@ -6,7 +6,7 @@
 /*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:47:59 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/03/31 22:57:55 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/04/01 16:34:03 by scorpot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,36 @@ void	ft_bzero(void *s, size_t n)
 		var++;
 	}
 }
+
+int	error_syntax(char **argv, int var)
+{
+	int	i;
+
+	i = 1;
+	while (argv[i] != NULL)
+	{
+		var = 0;
+		if (argv[i][var] == '\0')
+			return (1);
+		while (argv[i][var] != '\0')
+		{
+			if ((argv[i][var] >= '0' && argv[i][var] <= '9') ||
+					(argv[i][var] == '-' || argv[i][var] == '+'))
+			{
+				if ((argv[i][var] == '-' || argv[i][var] == '+') &&
+					((argv[i][var + 1] < '0' || argv[i][var] > '9') ||
+						(var != '\0')))
+					return (1);
+			}
+			else
+				return (1);
+			var++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 
 t_philo *philo(void)
 {
