@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_inc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:47:59 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/04/01 16:34:03 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/04/02 12:10:08 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ long	ft_atol(char *str)
 	a = 0;
 	res = 0;
 	count = 1;
-	while (str[a] == ' ' || (str[a] > 8 && str[a] < 14))
-	{
-		a++;
-	}
 	if ((str[a] == '-' || str[a] == '+'))
 	{
 		if (str[a] == '-')

@@ -6,7 +6,7 @@
 #    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/31 14:22:21 by rmota-ma          #+#    #+#              #
-#    Updated: 2025/03/31 14:56:12 by rmota-ma         ###   ########.fr        #
+#    Updated: 2025/04/04 15:19:01 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -g -Wall -Werror -Wextra
 SRC_DIR = srcs
 OBJ_DIR = objs
 
-SRC_FILES = main.c lib_inc.c
+SRC_FILES = main.c lib_inc.c philo.c actions.c
 
 SRC_OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scorpot <scorpot@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:32:02 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/04/01 16:33:56 by scorpot          ###   ########.fr       */
+/*   Updated: 2025/04/04 15:14:58 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+# include <unistd.h>
 
 int	main(int argc, char **argv)
 {
@@ -21,7 +22,7 @@ int	main(int argc, char **argv)
 		return (printf("Bad set of args"), 1);
 	if (error_syntax(argv, 0) != 0)
 		return (printf("Bad set of args"), 1);
-	philo()->args = ft_calloc(sizeof(long), argc - 2);
+	philo()->args = ft_calloc(sizeof(long), argc - 1);
 	while (var < argc - 1)
 	{
 		philo()->args[var] = ft_atol(argv[var + 1]);
@@ -29,7 +30,9 @@ int	main(int argc, char **argv)
 			return (free(philo()->args), printf("Bad set of args"), 1);
 		var++;
 	}
+	init_philo();
 	philo_rout(argc);
-	return (free(philo()->args), 0);
+	free_func();
+	return (0);
 }
 
