@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 12:05:05 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/04/16 12:05:20 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:50:05 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	error_syntax(char **argv, int var)
 						(var != '\0')))
 					return (1);
 			}
-			else
+			else if (ft_isalpha(argv[i][var], argv[i][var + 1]) == 1)
 				return (1);
 			var++;
 		}
@@ -97,10 +97,14 @@ int	error_syntax(char **argv, int var)
 	return (0);
 }
 
-
-t_prog *prog(void)
+int	ft_isalpha(int c, int next)
 {
-	static t_prog	prog;
-
-	return (&prog);
+	if ((c == ',' || c == '.') && (next < '0' || next > '9'))
+		return (1);
+	else
+	{
+		if (c != ',' && c != '.')
+			return (1);
+		return (0);
+	}
 }
