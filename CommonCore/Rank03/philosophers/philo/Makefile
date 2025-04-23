@@ -6,18 +6,18 @@
 #    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/31 14:22:21 by rmota-ma          #+#    #+#              #
-#    Updated: 2025/04/17 18:10:44 by rmota-ma         ###   ########.fr        #
+#    Updated: 2025/04/23 14:22:01 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -g -Wall -Werror -Wextra #-fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=thread
 
 SRC_DIR = srcs
 OBJ_DIR = objs
 
-SRC_FILES = main.c lib_inc.c philo.c actions.c
+SRC_FILES = main.c lib_inc.c philo.c actions.c prints.c
 
 SRC_OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

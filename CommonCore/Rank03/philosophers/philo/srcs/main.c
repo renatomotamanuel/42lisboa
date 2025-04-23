@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/17 10:58:29 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/04/17 11:00:16 by rmota-ma         ###   ########.fr       */
+/*   Created: 2025/04/18 15:55:58 by rmota-ma          #+#    #+#             */
+/*   Updated: 2025/04/21 17:05:38 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,10 @@ int	main(int argc, char **argv)
 	while (var < argc - 1)
 	{
 		prog()->args[var] = ft_atol(argv[var + 1]);
-		if ((prog()->args[var] > INT_MAX || prog()->args[var] < 0) || prog()->args[0] < 1)
+		if ((prog()->args[var] > INT_MAX || prog()->args[var] <= 0) || prog()->args[0] < 1 || prog()->args[0] >= 250) // checar argumentos e quais devem ser os seus valores
 			return (free(prog()->args), printf("Bad set of args"), 1);
 		var++;
 	}
-	/* if (prog()->args[0] == 1)
-		lone_philo(); */
 	init_philo();
 	free_func();
 	return (0);

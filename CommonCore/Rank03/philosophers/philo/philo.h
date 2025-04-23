@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:25:51 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/04/17 18:11:55 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:27:02 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,23 @@ typedef struct s_philo
 	struct timeval	current;
 	struct timeval	cycle_start;
 	pthread_t	thread;
-	int			id;
 	pthread_mutex_t	fork;
+	int				id;
 	int				dead;
+	int				stop;
 	int				eat_counter;
-	pthread_mutex_t	finish;
 }				t_philo;
 
 typedef struct s_prog
 {
 	struct timeval	start;
 	long			*args;
-	t_philo			*philo;
 	int				argc;
 	int				stop;
+	int				meal;
+	pthread_mutex_t eat_lock;
 	pthread_mutex_t	death;
-	int done;
+	t_philo			*philo;
 }				t_prog;
 
 
@@ -53,8 +54,8 @@ typedef struct s_prog
 void	init_philo(void);
 void	*philo_rout(void *id);
 void	think_eat_sleep(int id);
+void	multiple_philos(void);
 void	free_func(void);
-
 
 //LIB_INC.C
 void	*ft_calloc(size_t nmemb, size_t size);
@@ -67,7 +68,12 @@ int	error_syntax(char **argv, int var);
 void	eat_even(int id);
 void	eat_odd(int id);
 void	philo_sleep(int id);
-void	death_checker(int id, int sleep_time);
-void	reaper(int id);
+void	death_checker(int id, int sleep_time, long diff);
+
+//PRINTS.C
+void	fork_left(int id);
+void	fork_right(int id);
+void	eating(int id);
+void	*lone_philo(void *id);
 
 #endif
