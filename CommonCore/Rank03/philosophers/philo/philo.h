@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 14:25:51 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/04/23 17:28:07 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/04/24 13:29:17 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,9 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <stdlib.h>
-# include <stdarg.h>
-# include <fcntl.h>
 # include <stdio.h>
-# include <sys/wait.h>
-# include <string.h>
 # include <limits.h>
 # include <sys/time.h>
-# include <time.h>
 
 typedef struct s_philo
 {
