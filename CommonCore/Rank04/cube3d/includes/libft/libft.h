@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:30:35 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/07 15:57:48 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:28:44 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+void	*ft_free(char **strs);
 
 typedef struct s_list
 {

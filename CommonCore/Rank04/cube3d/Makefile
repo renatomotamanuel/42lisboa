@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmota-ma <rmota-ma@student.42.fr>          +#+  +:+       +#+         #
+#    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 15:04:39 by rmota-ma          #+#    #+#              #
-#    Updated: 2025/08/26 18:25:14 by rmota-ma         ###   ########.fr        #
+#    Updated: 2025/08/30 16:31:22 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ GNL_DIR = gnl
 OBJS_DIR = objs
 
 MLX_DIR = ./minilibx-linux
+
 
 # Colors
 
@@ -91,16 +92,16 @@ $(LIBFT):
 	@make -C includes/libft -s
 
 clean:
+	@$(MAKE) clean -C $(MLX_DIR)
 	@make clean -C includes/libft -s
 	@rm -rf $(OBJS_DIR)
 	@$(CLEAN_RUN)
 	@$(CLEAN_DONE)
 	@$(CUB3D_KO)
 	
-fclean:
+fclean: clean
 	@make fclean -C includes/libft -s
 	@rm -f $(NAME)
-	@rm -rf $(OBJS_DIR)
 	@$(FCLEAN_RUN)
 	@$(CLEAN_DONE)
 	@$(CUB3D_KO)

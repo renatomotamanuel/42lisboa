@@ -1,10 +1,7 @@
-NO ./cub3d
+NO ./textures/1.xpm
 
 
-WE ./Makefile
-
-
-
+WE ./textures/2.xpm
 
 
 
@@ -12,17 +9,18 @@ WE ./Makefile
 
 
 
-EA ./gnl/get_next_line.c
-
-
-SO ./srcs/main.c
-
-
-F 220,100,0
 
 
 
-C 
+EA ./textures/3.xpm
+
+
+SO ./textures/4.xpm
+
+
+F 220000,0,0
+
+C 0,0,0
 
     1    111111111              111111111111111111111
    101   100000001              11100000000000011111

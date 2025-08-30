@@ -6,7 +6,7 @@
 /*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:15:07 by rmota-ma          #+#    #+#             */
-/*   Updated: 2024/11/07 15:39:14 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:32:05 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,18 @@ static char	*ft_write_word(const char *str, int start, int end)
 	return (mal);
 }
 
-static void	*ft_free(char **strs, int check)
+void	*ft_free(char **strs)
 {
 	int	var;
 
 	var = 0;
-	while (var < check)
+	while (strs[var])
 	{
 		free(strs[var]);
 		var++;
 	}
-	free(strs);
+	if(strs)
+		free(strs);
 	return (NULL);
 }
 
@@ -92,7 +93,7 @@ char	**ft_split(char const *s, char c)
 		{
 			mal[var2] = ft_write_word(s, srch, var);
 			if (!(mal[var2]))
-				return (ft_free(mal, var2));
+				return (ft_free(mal));
 			srch = -1;
 			var2++;
 		}

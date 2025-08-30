@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 15:05:05 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/08/29 19:05:17 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:28:38 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include "../minilibx-linux/mlx.h"
+# include "../includes/libft/libft.h"
 
 typedef struct s_game
 {
@@ -44,11 +45,6 @@ char	*ft_strdup(const char *s);
 
 //lib_inc.c
 
-void	*ft_calloc(size_t nmemb, size_t size);
-char	*ft_strdup(const char *s);
 char	*ft_strdupnonl(const char *s);
-int	ft_strlen(const char *str);
-void	*ft_free(char **strs);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif

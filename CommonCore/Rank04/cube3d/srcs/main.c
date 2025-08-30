@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 17:47:04 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/08/29 19:07:40 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:26:12 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,28 @@ t_game *game(void)
 	static t_game g;
 	
 	return (&g);
+}
+
+int texture_name(char *av)
+{
+    int var;
+
+    var = 0;
+    while(av[var])
+        var++;
+    var--;
+    if(av[var] != 'm')
+        return (1);
+    var--;
+    if(av[var] != 'p')
+        return (1);
+    var--;
+    if(av[var] != 'x')
+        return (1);
+    var--;
+    if(av[var] != '.')
+        return (1);
+    return (0);
 }
 
 int map_name(char *av)
@@ -342,35 +364,54 @@ int	map_validate(char *av)
 	return (0);
 }
 
-int	map_textures(char *av)
+int	map_textures(void)
 {
 	int	var;
-	//int text;
-	(void)av;
+	int fd;
 
 	var = 0;
-	while(game()->info[var])
+	while (var < 4)
 	{
-		printf("%s\n", game()->info[var]);
+		fd = open(game()->info[var], O_RDONLY);
+		if (fd < 0)
+			return (printf("Invalid texture \"%s\".\n", game()->info[var]), ft_free(game()->info), 1);
+		close(fd);
+		if (texture_name(game()->info[var]))
+			return (printf("Invalid texture extension \"%s\". It should be a \".xpm\".\n", game()->info[var]), ft_free(game()->info), 1);
 		var++;
 	}
-	ft_free(game()->info);
-	/*while (var < 4)
+	return (0);
+}
+
+int	map_colors(void)
+{
+	int	var;
+	int	check;
+
+	var = 0;
+	check = 0;
+	while (game()->info[4][var])
 	{
-		temp = ft_strdupnonl(line);
-		free(line);
-		text = open(temp + 3, O_RDONLY);
-		if (text < 0)
-			return (close(fd), printf("Invalid texture \"%s\".\n", temp + 3), free(temp), 1);
-		close(text);
-		line = get_next_line(fd);
+		if ((game()->info[4][var] > '9' || game()->info[4][var] < '0') && game()->info[4][var] != ',')
+			return(1);
+		if (game()->info[4][var] == ',')
+			check++;
 		var++;
 	}
-	while(line)
+	if (check != 2 || var > 11 || var < 5)
+		return(1);
+	var = 0;
+	check = 0;
+	while (game()->info[5][var])
 	{
-		free(line);
-		line = get_next_line(fd);
-	}*/
+		if ((game()->info[5][var] > '9' || game()->info[5][var] < '0') && game()->info[5][var] != ',')
+			return(1);
+		if (game()->info[5][var] == ',')
+			check++;
+		var++;
+	}
+	if (check != 2 || var > 11 || var < 5)
+		return(1);
 	return (0);
 }
 
@@ -382,19 +423,21 @@ int parse_map(char **av)
 		return (printf("The map extension isn't valid. It should be a \".cub\".\n"), 1);
 	if (map_validate(av[1]))
 		return (1);
-	if (map_textures(av[1]))
+	if (map_textures())
 		return(1);
+	if (map_colors())
+		return (1);
 	if (map_chars(av[1]))
 		return (1);
 	if (map_walls(av[1]))
         return(1);
-	int var = 0;
+	/*int var = 0;
 	while(game()->map[var])
 	{
 		printf("map %s", game()->map[var]);
 		var++;
 	}
-	ft_free(game()->map);
+	ft_free(game()->map);*/
     return(0);
 }
 
