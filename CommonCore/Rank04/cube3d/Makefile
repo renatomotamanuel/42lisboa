@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: rmota-ma <rmota-ma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 15:04:39 by rmota-ma          #+#    #+#              #
-#    Updated: 2025/08/30 16:31:22 by rmota-ma         ###   ########.fr        #
+#    Updated: 2025/09/16 17:22:55 by rmota-ma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 LIBFT = includes/libft/libft.a
 
-SRCS = main.c lib_inc.c
+SRCS = main.c init.c parsing.c map_parse.c file_parse.c utils.c cleanup.c
 
 GNL = get_next_line.c get_next_line_utils.c
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmota-ma <rmota-ma@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmota-ma <rmota-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 17:15:07 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/08/30 16:32:05 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/09/16 18:17:25 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ static void	ft_init_var(size_t *var, int *var2, int *srch)
 	*var2 = 0;
 	*srch = -1;
 }
+
+#include <stdio.h>
 
 char	**ft_split(char const *s, char c)
 {

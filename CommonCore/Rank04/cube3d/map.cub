@@ -1,24 +1,25 @@
+EA ./textures/4.xpm
+
+WE ./textures/3.xpm
+
+
+
+
+SO ./textures/2.xpm
+
+
+
+
 NO ./textures/1.xpm
 
 
-WE ./textures/2.xpm
 
 
 
 
 
+F 255,255,252
 
-
-
-
-
-EA ./textures/3.xpm
-
-
-SO ./textures/4.xpm
-
-
-F 220000,0,0
 
 C 0,0,0
 

@@ -6,11 +6,11 @@
 /*   By: rmota-ma <rmota-ma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 20:26:28 by rmota-ma          #+#    #+#             */
-/*   Updated: 2025/08/27 16:35:54 by rmota-ma         ###   ########.fr       */
+/*   Updated: 2025/09/16 18:23:03 by rmota-ma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cube3d.h"
+#include "../../includes/cub3d.h"
 
 int	ft_linelen(char *str)
 {
