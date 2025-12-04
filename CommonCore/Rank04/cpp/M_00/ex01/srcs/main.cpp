@@ -13,7 +13,7 @@ int	main (void)
 		else if(cmd == "ADD")
 			book.addContact();
 		else if(cmd == "SEARCH")
-			book.displayAllContact();
+			book.searchContacts();
 		else if(cmd == "EXIT")
 			return (0);
 		else

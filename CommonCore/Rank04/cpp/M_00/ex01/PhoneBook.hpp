@@ -3,15 +3,17 @@
 
 # include <iostream>
 # include <string>
+# include <cstdlib>
 # include "Contact.hpp"
 
 class PhoneBook {
 private:
 	Contact array[8];
 	int index;
+	int _nbr;
 public:
 	PhoneBook();
 	void addContact();
-    void displayAllContact() const;
+    void searchContacts() const;
 };
 #endif

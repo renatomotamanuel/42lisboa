@@ -3,18 +3,26 @@
 
 # include <iostream>
 # include <string>
+# include <cstdlib>
+
 
 class Contact {
 private:
-	std::string first_name;
-	std::string last_name;
-	std::string number;
+	std::string _firstName;
+	std::string _lastName;
+	std::string _nickName;
+	std::string _phoneNumber;
+	std::string _darkestSecret;
 public:
-	Contact(std::string first_name = "", std::string last_name = "", std::string number = "");
+	Contact(std::string _firstName = "", 
+		std::string _lastName = "", std::string _nickName = "", 
+		std::string _phoneNumber = "", std::string _darkestSecret = "");
 	~Contact();
-	Contact& operator=(const Contact& other);
-	std::string getName() const;
+	std::string getFname() const;
+	std::string getLname() const;
+	std::string getNname() const;
 	std::string getNumber() const;
+	Contact& operator=(const Contact& other);
 	void displayContact() const;
 };
 
