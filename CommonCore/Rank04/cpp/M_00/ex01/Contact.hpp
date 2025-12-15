@@ -22,6 +22,7 @@ public:
 	std::string getLname() const;
 	std::string getNname() const;
 	std::string getNumber() const;
+	std::string getSecret() const;
 	Contact& operator=(const Contact& other);
 	void displayContact() const;
 };

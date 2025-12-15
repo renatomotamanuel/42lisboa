@@ -13,23 +13,39 @@ void PhoneBook::addContact() {
 	std::cout << "Insert first name:";
 	std::cin >> t_fname;
 	if(std::cin.eof())
-			exit (0);
+			return ;
 	std::cout << "Insert last name:";
 	std::cin >> t_lname;
 	if(std::cin.eof())
-			exit (0);
+			return ;
 	std::cout << "Insert nickname:";
 	std::cin >> t_nname;
 	if(std::cin.eof())
-			exit (0);
-	std::cout << "Insert phone number:";
-	std::cin >> t_number;
-	if(std::cin.eof())
-			exit (0);
+			return ;
+	int i;
+	while(1)
+	{
+		i = 0;
+		std::cout << "Insert phone number:";
+		if(std::cin.eof())
+			return ;
+		std::cin >> t_number;
+		while(t_number[i])
+		{
+			if (!isdigit(t_number[i]))
+			{
+				std::cout << "Phone number may only contain digits." << std::endl;
+				break ;
+			}
+			i++;
+		}
+		if(!t_number[i])
+			break ;
+	}
 	std::cout << "Insert darkest secret:";
 	std::cin >> t_secret;
     if(std::cin.eof())
-			exit (0);
+			return ;
 	array[index] = Contact(t_fname, t_lname, t_nname, t_number, t_secret);
     index++;
 	if (_nbr < 8)
@@ -172,18 +188,25 @@ void PhoneBook::searchContacts() const {
 		std::cout << std::endl;
 		var++;
 	}
+	int bnbr;
 	std::cout << "Insert the index of the contact you're trying to search:";
 	while(1)
 	{
 		std::cin >> str;
 		if(std::cin.eof())
 			exit (0);
-		int bnbr = std::atoi(str.c_str());
+		bnbr = std::atoi(str.c_str());
 		if(bnbr >= _nbr + 1 || bnbr < 1)
-			std::cout << "Wrong usage. Try inserting only a digit of a valid contact " << bnbr << std::endl;
+			std::cout << "Wrong usage. Try inserting only a digit of a valid contact " << std::endl;
 		else
 			break ;
 		std::cout << "Try again:";
 	}
-	
+	var = 0;
+	bnbr--;
+	std::cout << "First name: " << array[bnbr].getFname() << std::endl;
+	std::cout << "Last name: " << array[bnbr].getLname() << std::endl;
+	std::cout << "Nickname: " << array[bnbr].getNname() << std::endl;
+	std::cout << "Phone number: " << array[bnbr].getNumber() << std::endl;
+	std::cout << "Darkest secret: " << array[bnbr].getSecret() << std::endl;
 }

@@ -3,7 +3,7 @@
 Contact::Contact(std::string _firstName, std::string _lastName, std::string _nickName, std::string _phoneNumber, std::string _darkestSecret)
 	: _firstName(_firstName), _lastName(_lastName), _nickName(_nickName), _phoneNumber(_phoneNumber), _darkestSecret(_darkestSecret) {}
 
-Contact::~Contact(){}
+Contact::~Contact() {std::cout << "Contact has been destroyed." << std::endl;}
 
 Contact& Contact::operator=(const Contact& other){
 	if (this != &other){
@@ -30,6 +30,10 @@ std::string Contact::getNname() const{
 
 std::string Contact::getNumber() const{
 	return (this->_phoneNumber);
+}
+
+std::string Contact::getSecret() const{
+	return (this->_darkestSecret);
 }
 
 void Contact::displayContact() const {

@@ -7,6 +7,7 @@ int	main (void)
 
 	while(1)
 	{
+		std::cout << "Possible commands: ADD, SEARCH or EXIT." << std::endl;
 		std::cin >> cmd;
 		if(std::cin.eof() )
 			return (0);
@@ -17,8 +18,7 @@ int	main (void)
 		else if(cmd == "EXIT")
 			return (0);
 		else
-			std::cout << "Wrong usage. Try ADD or SEARCH or EXIT" << std::endl;
+			std::cout << "Wrong usage, try again." << std::endl;
 	}
-
 	return 0;
 }
