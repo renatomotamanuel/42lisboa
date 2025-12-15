@@ -1,10 +1,10 @@
-NAME = Error_404
+NAME = BraiiiiiiinnnzzzZ
 CPP = c++
 FLAGS = -Wall -Wextra -Werror -g -std=c++98
 OBJ_DIR = objs
 SRC_DIR = srcs
 
-SRCS = tests.cpp Account.cpp
+SRCS = main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
 
 OBJ= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 SRC= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
