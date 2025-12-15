@@ -39,3 +39,11 @@ std::string Contact::getSecret() const{
 void Contact::displayContact() const {
     std::cout << "First name : " << _firstName << " Last name: " << _lastName << ", Phone: " << _phoneNumber << std::endl;
 }
+
+void Contact::saveContact(std::string t_fname, std::string t_lname, std::string t_nname, std::string t_number, std::string t_secret){
+	_firstName = t_fname;
+	_lastName = t_lname;
+	_nickName = t_nname;
+	_phoneNumber = t_number;
+	_darkestSecret = t_secret;
+}

@@ -46,7 +46,7 @@ void PhoneBook::addContact() {
 	std::cin >> t_secret;
     if(std::cin.eof())
 			return ;
-	array[index] = Contact(t_fname, t_lname, t_nname, t_number, t_secret);
+	array[index].saveContact(t_fname, t_lname, t_nname, t_number, t_secret);
     index++;
 	if (_nbr < 8)
 		_nbr++;

@@ -25,6 +25,7 @@ public:
 	std::string getSecret() const;
 	Contact& operator=(const Contact& other);
 	void displayContact() const;
+	void saveContact(std::string t_fname, std::string t_lname, std::string t_nname, std::string t_number, std::string t_secret);
 };
 
 #endif
