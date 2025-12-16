@@ -4,6 +4,7 @@
 # include <iostream>
 # include <string>
 # include <cstdlib>
+# include <iomanip>
 # include "Contact.hpp"
 
 class PhoneBook {
@@ -15,5 +16,7 @@ public:
 	PhoneBook();
 	void addContact();
     void searchContacts() const;
+	void	displayTable(void) const;
+	void	writeInfo(int idx) const;
 };
 #endif

@@ -2,21 +2,13 @@
 
 int	main (int ac, char **av)
 {
-	int	var = 1, var2 = 0;
-
 	if(ac == 1)
 		return std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl, 0;
-	while(av[var])
-	{
-		var2 = 0;
-		while(av[var][var2])
-		{
-			if(av[var][var2] >= 97 && av[var][var2] <= 122)
-				av[var][var2] -= 32;
-			var2++;
-		}
-		std::cout << av[var];
-		var++;
+	for(int var = 0; av[var]; var++){
+		std::string str = av[var];
+		for(int var2 = 0; str[var2]; var2++)
+			str[var2] = std::toupper(str[var2]);
+		std::cout << str;
 	}
 	std::cout << std::endl;
 	return 0;

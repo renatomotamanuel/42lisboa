@@ -52,146 +52,66 @@ void PhoneBook::addContact() {
 		_nbr++;
 }
 
+void	writeTop(void){
+	int ext = 0;
+	for(int var = 0; var < 44; var++){
+		if ((var - ext) % 10 == 0){
+			std::cout << '|';
+			ext++;
+			std::cout << "‾";
+			var++;
+		}
+		else
+			std::cout << "‾";
+	}
+	std::cout << '|' << std::endl;
+}
+
+void	writeBot(void){
+	for(int var = 0; var < 4; var++)
+		std::cout << '|' << std::setw(10) << std::setfill('_') << "";
+	std::cout  << '|' << std::endl;
+}
+
+std::string	truncName(std::string str){
+	if (str.length() > 10){
+		str = str.substr(0, 9);
+		str += '.';
+	}
+	return str;
+}
+
+void	PhoneBook::writeInfo(int idx) const{
+	if (idx == -1){
+		std::cout << '|' << std::setw(10) << std::setfill(' ') << "Index" << std::setw(0) << '|' 
+		<< std::setw(10) << std::setfill(' ') << "F. Name" << std::setw(0) << '|' 
+		<< std::setw(10) << std::setfill(' ') << "L. Name" << std::setw(0) << '|' 
+		<< std::setw(10) << std::setfill(' ') << "Nickname" << std::setw(0) << '|'<< std::endl;
+		return ;
+	}
+	std::cout << '|' << std::setw(9) << std::setfill(' ') << idx + 1 << '.' << std::setw(0) << '|' 
+	<< std::setw(10) << std::setfill(' ') << truncName(array[idx].getFname()) << std::setw(0) << '|' 
+	<< std::setw(10) << std::setfill(' ') << truncName(array[idx].getLname()) << std::setw(0) << '|' 
+	<< std::setw(10) << std::setfill(' ') << truncName(array[idx].getNname()) << std::setw(0) << '|'<< std::endl;
+}
+
+void	PhoneBook::displayTable(void) const{
+	for(int var = 0; var < _nbr + 1; var++){
+		writeTop();
+		writeInfo(var - 1);
+		writeBot();
+	}
+}
 void PhoneBook::searchContacts() const {
-    int var = 0;
-	int var2 = 0;
-	int i = 0;
 	std::string str;
-	if(_nbr == 0)
-	{
+	if(_nbr == 0){
 		std::cout << "No contacts added yet. First use the ADD command." << std::endl;
 		return ;
 	}
-	while(var < (_nbr * 3) + 3)
-	{
-		var2 = 0;
-		while(var2 < 45)
-		{
-			if (var2 == 0 || var2 == 11 || var2 == 22 || var2 == 33 || var2 == 44)
-				std::cout << '|';
-			else if (var == 0 || var == 3 || var == 6 || var == 9 || var == 12 || var == 15 || var == 18 || var == 21 || var == 24)
-				std::cout << "‾";
-			else if (var == 2 || var == 5 || var == 8 || var == 11 || var == 14 || var == 17 || var == 20 || var == 23 || var == 26)
-				std::cout << '_';
-			else if (var == 1)
-			{
-				if(var2 == 1)
-				{
-					std::cout << "First Name";
-					var2 = 10;
-				}
-				else if (var2 == 12)
-				{
-					std::cout << "Last  Name";
-					var2 = 21;
-				}
-				else if (var2 == 23)
-				{
-					std::cout << " Nickname ";
-					var2 = 32;
-				}
-				else if (var2 == 34)
-				{
-					std::cout << "Phone  nbr";
-					var2 = 43;
-				}
-			}
-			else if(var == (i + 1) * 3 + 1)
-			{
-				if (var2 == 1)
-				{
-					str = array[i].getFname();
-					std::cout << i + 1 << ". ";
-					if (str.length() > 7)
-					{
-						str = str.substr(0, 6);
-						std::cout << str << '.';
-					}
-					else
-					{
-						int j = 7 - str.length();
-						while(j > 0)
-						{
-							std::cout << ' ';
-							j--;
-						}
-						std::cout << str;
-					}
-					var2 = 10;
-				}
-				else if (var2 == 12)
-				{
-					str = array[i].getLname();
-					if (str.length() > 10)
-					{
-						str = str.substr(0, 9);
-						std::cout << str << '.';
-					}
-					else
-					{
-						int j = 10 - str.length();
-						while(j > 0)
-						{
-							std::cout << ' ';
-							j--;
-						}
-						std::cout << str;
-					}
-					var2 = 21;
-				}
-				else if (var2 == 23)
-				{
-					str = array[i].getNname();
-					if (str.length() > 10)
-					{
-						str = str.substr(0, 9);
-						std::cout << str << '.';
-					}
-					else
-					{
-						int j = 10 - str.length();
-						while(j > 0)
-						{
-							std::cout << ' ';
-							j--;
-						}
-						std::cout << str;
-					}
-					var2 = 32;
-				}
-				else if (var2 == 34)
-				{
-					str = array[i].getNumber();
-					if (str.length() > 10)
-					{
-						str = str.substr(0, 9);
-						std::cout << str << '.';
-					}
-					else
-					{
-						int j = 10 - str.length();
-						while(j > 0)
-						{
-							std::cout << ' ';
-							j--;
-						}
-						std::cout << str;
-					}
-					var2 = 43;
-					i++;
-				}
-			}
-			else
-				std::cout << ' ';
-			var2++;
-		}
-		std::cout << std::endl;
-		var++;
-	}
+	displayTable();
 	int bnbr;
 	std::cout << "Insert the index of the contact you're trying to search:";
-	while(1)
-	{
+	while(1){
 		std::cin >> str;
 		if(std::cin.eof())
 			exit (0);
@@ -202,7 +122,6 @@ void PhoneBook::searchContacts() const {
 			break ;
 		std::cout << "Try again:";
 	}
-	var = 0;
 	bnbr--;
 	std::cout << "First name: " << array[bnbr].getFname() << std::endl;
 	std::cout << "Last name: " << array[bnbr].getLname() << std::endl;
