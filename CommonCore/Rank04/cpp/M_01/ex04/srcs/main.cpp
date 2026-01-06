@@ -4,8 +4,6 @@
 
 int	main (int ac, char **av)
 {
-	int replace;
-	int j;
 	if (ac !=4)
 		return std::cout << "Program must take 3 args, filename, s1 and s2." << std::endl, 1;
 	std::string s1 = std::string (av[2]);
@@ -21,29 +19,17 @@ int	main (int ac, char **av)
 	if(!outfile.is_open())
 		return std::cout << "Error. Could not create the file." << std::endl, 1;
 	std::string line;
-	while(std::getline(infile, line))
-	{
-		for (int i = 0; line[i]; i++)
-		{
-			replace = 0;
-			if(line[i] == s1[0])
-			{
-				for (j = 0; line[i + j] && s1[j]; j++)
-				{
-					if(line [i + j] != s1[j])
-					{
-						replace = 1;
-						break ;
-					}
-				}
-				if(!replace)
-				{
-					i += j;
-					for(int k = 0; s2[k]; k++)
-						outfile << s2[k];
-				}
+	while(std::getline(infile, line)){
+		size_t pos = 0;
+		size_t old_pos = 0;
+		while(1){
+			pos = line.find(s1.c_str(), old_pos, s1.length());
+			if(pos == std::string::npos){
+				outfile << line.substr(old_pos);
+				break ;
 			}
-			outfile << line[i];
+			outfile << line.substr(old_pos, pos - old_pos) << s2;
+			old_pos = pos + s1.length();
 		}
 		outfile << std::endl;
 	}
