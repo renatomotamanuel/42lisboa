@@ -13,6 +13,8 @@ public:
 	Cat();
 	~Cat();
 	virtual int	makeSound() const;
+	Cat(const Cat &other);
+    Cat &operator=(const Cat &other);
 };
 
 

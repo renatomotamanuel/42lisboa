@@ -13,6 +13,8 @@ public:
 	Dog();
 	~Dog();
 	virtual int	makeSound() const;
+	Dog(const Dog &other);
+    Dog &operator=(const Dog &other);
 };
 
 

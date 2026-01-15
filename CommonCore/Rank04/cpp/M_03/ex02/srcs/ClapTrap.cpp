@@ -1,7 +1,7 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap() : _hitPoints(10), _energyPoints(10), _attackDamage(0){
-	std::cout << "Base ClapTrap constructor called" << std::endl;
+ClapTrap::ClapTrap() : _name("Default"), _hitPoints(10), _energyPoints(10), _attackDamage(0){
+	std::cout << "Default ClapTrap constructor called" << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name) : _hitPoints(10), _energyPoints(10), _attackDamage(0){
@@ -11,6 +11,22 @@ ClapTrap::ClapTrap(std::string name) : _hitPoints(10), _energyPoints(10), _attac
 
 ClapTrap::~ClapTrap() {
 	std::cout << "ClapTrap " << _name << " has been DESTROYED." << std::endl;
+}
+
+ClapTrap::ClapTrap(const ClapTrap &other) {
+	std::cout << "Copy constructor called" << std::endl;
+	*this = other;
+}
+
+ClapTrap &ClapTrap::operator=(const ClapTrap &other) {
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &other) {
+		this->_name = other._name;
+		this->_attackDamage = other._attackDamage;
+		this->_energyPoints = other._energyPoints;
+		this->_hitPoints = other._hitPoints;
+	}
+	return *this;
 }
 
 void ClapTrap::attack(const std::string& target){

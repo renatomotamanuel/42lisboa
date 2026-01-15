@@ -14,3 +14,16 @@ Dog::~Dog() {
 int Dog::makeSound() const{
 	return std::cout << "AuAuAuAuAuAu" << std::endl, 0;
 }
+
+Dog::Dog(const Dog &other) : Animal() {
+	std::cout << "Copy constructor called" << std::endl;
+	*this = other;
+}
+
+Dog &Dog::operator=(const Dog &other) {
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &other) {
+		this->_type = other._type;
+	}
+	return *this;
+}

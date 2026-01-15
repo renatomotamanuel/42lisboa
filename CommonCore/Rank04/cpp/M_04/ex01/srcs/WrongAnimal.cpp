@@ -18,7 +18,20 @@ std::string WrongAnimal::getType() const{
 }
 
 int WrongAnimal::makeSound() const{
-	if(_type == "Cat")
+	if(_type == "WrongCat")
 		return std::cout << "Wrong Miauuuuuuuuuuuuuu" << std::endl, 0;
 	return 0;
+}
+
+WrongAnimal::WrongAnimal(const WrongAnimal &other) {
+	std::cout << "Copy constructor called" << std::endl;
+	*this = other;
+}
+
+WrongAnimal &WrongAnimal::operator=(const WrongAnimal &other) {
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &other) {
+		this->_type = other._type;
+	}
+	return *this;
 }

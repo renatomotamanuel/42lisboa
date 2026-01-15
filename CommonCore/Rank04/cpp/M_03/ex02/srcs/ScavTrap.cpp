@@ -1,12 +1,35 @@
 #include "ScavTrap.hpp"
 
-ScavTrap::ScavTrap() : _hitPoints(100), _energyPoints(50), _attackDamage(20){
-	std::cout << "Base ScavTrap constructor called" << std::endl;
+ScavTrap::ScavTrap() : ClapTrap(){
+	std::cout << "Default ScavTrap constructor called" << std::endl;
+	_hitPoints = 100;
+	_energyPoints = 50;
+	_attackDamage = 20;
+	_name = "Default";
 }
 
-ScavTrap::ScavTrap(std::string name) : _hitPoints(100), _energyPoints(50), _attackDamage(20){
-	std::cout << "ScavTrap constructor called" << std::endl;
+ScavTrap::ScavTrap(std::string name) : ClapTrap(){
+	std::cout << "Base ScavTrap constructor called" << std::endl;
+	_hitPoints = 100;
+	_energyPoints = 50;
+	_attackDamage = 20;
 	_name = name;
+}
+
+ScavTrap::ScavTrap(const ScavTrap &other) : ClapTrap(other){
+	std::cout << "Copy constructor called" << std::endl;
+	*this = other;
+}
+
+ScavTrap &ScavTrap::operator=(const ScavTrap &other) {
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &other) {
+		this->_name = other._name;
+		this->_attackDamage = other._attackDamage;
+		this->_energyPoints = other._energyPoints;
+		this->_hitPoints = other._hitPoints;
+	}
+	return *this;
 }
 
 ScavTrap::~ScavTrap() {
@@ -27,38 +50,6 @@ void ScavTrap::attack(const std::string& target){
 	if(_attackDamage == 0)
 		std::cout << " Are you sure you're not a Magikarp?";
 	std::cout << std::endl;
-}
-
-void ScavTrap::takeDamage(unsigned int amount){
-	if(!_hitPoints){
-		std::cout << "ScavTrap " << _name << " can't take damage! It is already dead!" << std::endl;
-		return ;
-	}
-	std::cout << "ScavTrap " << _name << " is hit for " << amount << " points of damage!" << std::endl;
-	_hitPoints -= amount;
-	if(_hitPoints < 0)
-		_hitPoints = 0;
-	if(!_hitPoints)
-		std::cout << "ScavTrap " << _name << " has fainted! You should take him to a PokeCenter." << std::endl;
-	else
-		std::cout << "ScavTrap " << _name << " now has " << _hitPoints << " HP!" << std::endl;
-}
-
-void ScavTrap::beRepaired(unsigned int amount){
-	if(!_energyPoints){
-		std::cout << "ScavTrap " << _name << " can't repair itself! It has 0 Energy Points!" << std::endl;
-		return ;
-	}
-	else if(!_hitPoints){
-		std::cout << "ScavTrap " << _name << " can't repair itself! It is already dead!" << std::endl;
-		return ;
-	}
-	std::cout << "ScavTrap " << _name << " repairs itself for " << amount << " HP!" << std::endl;
-	_energyPoints--;
-	_hitPoints += amount;
-	if(_hitPoints > 100)
-		_hitPoints = 100;
-	std::cout << "ScavTrap " << _name << " now has " << _hitPoints << " HP!" << std::endl;
 }
 
 void	ScavTrap::guardGate(){

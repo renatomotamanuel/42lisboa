@@ -9,6 +9,8 @@ class Dog : public Animal{
 public:
 	Dog();
 	~Dog();
+	Dog(const Dog &other);
+    Dog &operator=(const Dog &other);
 };
 
 

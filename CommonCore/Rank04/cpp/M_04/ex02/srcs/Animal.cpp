@@ -17,6 +17,19 @@ std::string Animal::getType() const{
 	return _type;
 }
 
+Animal::Animal(const Animal &other) {
+	std::cout << "Copy constructor called" << std::endl;
+	*this = other;
+}
+
+Animal &Animal::operator=(const Animal &other) {
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &other) {
+		this->_type = other._type;
+	}
+	return *this;
+}
+
 int Animal::makeSound() const{
 	if(_type == "Cat")
 		return std::cout << "Miauuuuuuuuuuuuuu" << std::endl, 0;

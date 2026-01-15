@@ -9,6 +9,6 @@ int	main(void){
 	Blood.whoAmI();
 	Rare.whoAmI();
 	Blood.attack(Rare.getName());
-	Rare.takeDamage(Blood.fragGetAtkDmg());
+	Rare.takeDamage(30);
 
 }
