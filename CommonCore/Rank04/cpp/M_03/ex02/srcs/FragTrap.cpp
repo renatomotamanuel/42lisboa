@@ -36,22 +36,6 @@ FragTrap &FragTrap::operator=(const FragTrap &other) {
 	return *this;
 }
 
-void FragTrap::attack(const std::string& target){
-	if(!_energyPoints){
-		std::cout << "FragTrap " << _name << " can't attack! It has 0 Energy Points!" << std::endl;
-		return ;
-	}
-	else if(!_hitPoints){
-		std::cout << "FragTrap " << _name << " can't attack! It is already dead!" << std::endl;
-		return ;
-	}
-	std::cout << "FragTrap " << _name << " attacks " << target << " for " << _attackDamage << " points of damage!";
-	_energyPoints--;
-	if(_attackDamage == 0)
-		std::cout << " Are you sure you're not a Magikarp?";
-	std::cout << std::endl;
-}
-
 void	FragTrap::highFiveGuys(){
 	if(!_energyPoints){
 		std::cout << "FragTrap " << _name << " can't high five! It has 0 Energy Points!" << std::endl;
