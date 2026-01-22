@@ -3,12 +3,12 @@
 
 # include <iostream>
 # include <string>
+# include "AMateria.hpp"
 
-class Ice{
-private:
-
+class Ice : public AMateria{
 public:
 	Ice();
+	Ice(std::string type);
 	~Ice();
 };
 
