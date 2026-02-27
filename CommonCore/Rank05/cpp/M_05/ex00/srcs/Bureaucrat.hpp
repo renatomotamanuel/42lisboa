@@ -5,7 +5,7 @@
 # include <string>
 
 class Bureaucrat {
-protected:
+private:
 	std::string const _name;
 	int _grade;
 public:
@@ -14,10 +14,11 @@ public:
 	~Bureaucrat();
 	Bureaucrat(const Bureaucrat &other);
     Bureaucrat &operator=(const Bureaucrat &other);
-    Bureaucrat &operator<<(const Bureaucrat &other);
 	std::string getName();
 	int getGrade();
+	void incrementGrade(void);
+	void decrementGrade(void);
 };
-
+std::ostream& operator<<(std::ostream& os, Bureaucrat& f);
 
 #endif

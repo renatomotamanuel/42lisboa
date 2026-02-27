@@ -3,9 +3,10 @@
 
 # include <iostream>
 # include <string>
+# include "Form.hpp"
 
 class Bureaucrat {
-protected:
+private:
 	std::string const _name;
 	int _grade;
 public:
@@ -16,7 +17,10 @@ public:
     Bureaucrat &operator=(const Bureaucrat &other);
 	std::string getName();
 	int getGrade();
+	void incrementGrade(void);
+	void decrementGrade(void);
+	void signForm(Form& f);
 };
-
+std::ostream& operator<<(std::ostream& os, Bureaucrat& f);
 
 #endif

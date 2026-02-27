@@ -70,3 +70,10 @@ std::string Bureaucrat::getName(){
 int Bureaucrat::getGrade(){
 	return _grade;
 }
+
+void Bureaucrat::signForm(Form& f){
+	if(f.beSigned(*this))
+		std::cout << _name << " signed " << f.getName() << '.' << std::endl;
+	else
+		std::cout << _name << " couldn't sign " << f.getName() << "because grade is too low." << std::endl;
+}
