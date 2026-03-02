@@ -1,0 +1,19 @@
+#include "Bureaucrat.hpp"
+#include "AForm.hpp"
+
+int main(){
+	
+	Bureaucrat Empresario("ola", 150);
+	std::cout << Empresario << std::endl;
+	Empresario.decrementGrade();
+	std::cout << Empresario << std::endl;
+	Empresario.incrementGrade();
+	std::cout << Empresario << std::endl;
+	
+	Bureaucrat Empresario2("ola2", 1);
+	std::cout << Empresario2 << std::endl;
+	Empresario2.incrementGrade();
+	std::cout << Empresario2 << std::endl;
+	Empresario2.decrementGrade();
+	std::cout << Empresario2 << std::endl;
+}
