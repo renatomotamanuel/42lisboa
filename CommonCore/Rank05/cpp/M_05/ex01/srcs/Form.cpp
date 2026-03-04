@@ -31,7 +31,7 @@ Form::~Form() {
 	std::cout << "Form has been DESTROYED" << std::endl;
 }
 
-Form::Form(const Form &other) {
+Form::Form(const Form &other) : _reqSign(other._reqSign), _reqExec(other._reqExec){
 	std::cout << "Copy constructor called" << std::endl;
 	*this = other;
 }
@@ -39,9 +39,7 @@ Form::Form(const Form &other) {
 Form &Form::operator=(const Form &other) {
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &other) {
-		//_name copy missing(?)
-		this->_reqSign = other._reqSign;
-		this->_reqExec = other._reqExec;
+		this->_signed = other._signed;
 	}
 	return *this;
 }

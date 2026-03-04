@@ -28,6 +28,7 @@ void Bureaucrat::decrementGrade(void){
 		std::cout << e.what() << std::endl;
 	}
 }
+
 void Bureaucrat::incrementGrade(void){
 	try{
 		_grade--;
@@ -52,7 +53,6 @@ Bureaucrat::Bureaucrat(const Bureaucrat &other) {
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other) {
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &other) {
-		//_name copy missing(?)
 		this->_grade = other._grade;
 	}
 	return *this;

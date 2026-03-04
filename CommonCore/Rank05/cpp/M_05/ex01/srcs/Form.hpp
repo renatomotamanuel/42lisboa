@@ -10,8 +10,8 @@ class Form {
 private:
 	std::string const _name;
 	bool _signed;
-	int _reqSign;
-	int _reqExec;
+	int const _reqSign;
+	int const _reqExec;
 public:
 	Form();
 	~Form();
