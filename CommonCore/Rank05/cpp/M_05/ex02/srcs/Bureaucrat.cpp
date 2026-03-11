@@ -63,11 +63,11 @@ std::ostream& operator<<(std::ostream& os, Bureaucrat& f){
 	return os;
 }
 
-std::string Bureaucrat::getName(){
+std::string Bureaucrat::getName() const{
 	return _name;
 }
 
-int Bureaucrat::getGrade(){
+int Bureaucrat::getGrade() const{
 	return _grade;
 }
 
@@ -76,4 +76,17 @@ void Bureaucrat::signForm(AForm& f){
 		std::cout << _name << " signed " << f.getName() << '.' << std::endl;
 	else
 		std::cout << _name << " couldn't sign " << f.getName() << "because grade is too low." << std::endl;
+}
+
+void Bureaucrat::executeForm(AForm const & form){
+	if(form.execute(*this))
+		std::cout << _name << " executed " << form.getName() << '.' << std::endl;
+	else
+		std::cout << _name << " couldn't execute " << form.getName() << " because";
+	if(!form.getSign() && form.getExecGrade() > this->getGrade())
+		std::cout << " form isn't signed and grade is too low." << std::endl;
+	else if(!form.getSign())
+		std::cout << " form isn't signed" << std::endl;
+	else if(form.getExecGrade() > this->getGrade())
+		std::cout << " grade is too low." << std::endl;
 }

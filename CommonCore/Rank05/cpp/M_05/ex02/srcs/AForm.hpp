@@ -19,10 +19,12 @@ public:
 	AForm(std::string name, int reqSign, int reqExec);
     AForm &operator=(const AForm &other);
 	int beSigned(Bureaucrat& f);
-	std::string getName();
+	int execute(Bureaucrat const & executor) const;
+	std::string getName() const;
 	int getSignGrade();
-	int getSign();
-	int getExecGrade();
+	int getSign() const;
+	int getExecGrade() const;
+	virtual int executeAction(const Bureaucrat &f) const = 0;
 };
 
 #endif

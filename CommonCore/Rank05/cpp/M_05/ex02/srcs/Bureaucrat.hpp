@@ -15,11 +15,12 @@ public:
 	~Bureaucrat();
 	Bureaucrat(const Bureaucrat &other);
     Bureaucrat &operator=(const Bureaucrat &other);
-	std::string getName();
-	int getGrade();
+	std::string getName() const;
+	int getGrade() const;
 	void incrementGrade(void);
 	void decrementGrade(void);
 	void signForm(AForm& f);
+	void executeForm(AForm const & form);
 };
 std::ostream& operator<<(std::ostream& os, Bureaucrat& f);
 

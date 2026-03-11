@@ -3,27 +3,19 @@
 
 # include <iostream>
 # include <string>
+# include <fstream>
 # include "AForm.hpp"
 
 class Bureaucrat;
 
 class ShrubberyCreationForm : public AForm{
-private:
-	std::string const _name;
-	bool _signed;
-	int const _reqSign;
-	int const _reqExec;
 public:
 	ShrubberyCreationForm();
 	~ShrubberyCreationForm();
 	ShrubberyCreationForm(const ShrubberyCreationForm &other);
-	ShrubberyCreationForm(std::string name, int reqSign, int reqExec);
+	ShrubberyCreationForm(std::string target);
     ShrubberyCreationForm &operator=(const ShrubberyCreationForm &other);
-	int beSigned(Bureaucrat& f);
-	std::string getName();
-	int getSignGrade();
-	int getSign();
-	int getExecGrade();
+	int executeAction(const Bureaucrat &f) const;
 };
 
 #endif

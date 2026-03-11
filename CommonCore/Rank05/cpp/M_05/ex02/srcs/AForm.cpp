@@ -44,7 +44,7 @@ AForm &AForm::operator=(const AForm &other) {
 	return *this;
 }
 
-std::string AForm::getName(){
+std::string AForm::getName() const{
 	return _name;
 }
 
@@ -52,11 +52,11 @@ int AForm::getSignGrade(){
 	return _reqSign;
 }
 
-int AForm::getSign(){
+int AForm::getSign() const{
 	return _signed;
 }
 
-int AForm::getExecGrade(){
+int AForm::getExecGrade() const{
 	return _reqExec;
 }
 
@@ -75,6 +75,23 @@ int AForm::beSigned(Bureaucrat& f){
 			throw std::runtime_error("AForm::GradeTooLowException");
 		else{
 			_signed = 1;
+			return 1;
+		}
+	}
+	catch (std::exception & e){
+		std::cout << e.what() << std::endl;
+		return (0);
+	}
+}
+
+int AForm::execute(Bureaucrat const & executor) const{
+	try{
+		if(!_signed)
+			throw std::runtime_error("AForm::FormNotSignedException");
+		else if(_reqExec > executor.getGrade())
+			throw std::runtime_error("AForm::GradeTooLowException");
+		else{
+			executeAction(executor);
 			return 1;
 		}
 	}
