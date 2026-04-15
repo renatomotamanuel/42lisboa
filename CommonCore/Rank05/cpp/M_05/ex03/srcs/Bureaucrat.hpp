@@ -1,0 +1,27 @@
+#ifndef BUREAUCRAT_HPP
+# define BUREAUCRAT_HPP
+
+# include <iostream>
+# include <string>
+# include "AForm.hpp"
+
+class Bureaucrat {
+private:
+	std::string const _name;
+	int _grade;
+public:
+	Bureaucrat();
+	Bureaucrat(std::string name, int grade);
+	~Bureaucrat();
+	Bureaucrat(const Bureaucrat &other);
+    Bureaucrat &operator=(const Bureaucrat &other);
+	std::string getName() const;
+	int getGrade() const;
+	void incrementGrade(void);
+	void decrementGrade(void);
+	void signForm(AForm& f);
+	void executeForm(AForm const & form);
+};
+std::ostream& operator<<(std::ostream& os, Bureaucrat& f);
+
+#endif
