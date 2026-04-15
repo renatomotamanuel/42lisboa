@@ -7,7 +7,7 @@ SRC_DIR = srcs
 SRCS = main.cpp Bureaucrat.cpp Form.cpp
 
 OBJ= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
-SRC= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+SRC= $(addprefix $(SRC_DIR)/, $(SRCS))
 
 all: $(NAME)
 

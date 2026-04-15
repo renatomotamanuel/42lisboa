@@ -3,18 +3,20 @@
 
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("Default", 145, 137){
 	std::cout << "Default ShrubberyCreationForm constructor called" << std::endl;
+    _target = "Default";
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target)  : AForm(target, 145, 137){
 	std::cout << "ShrubberyCreationForm constructor called" << std::endl;
+    _target = target;
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {
 	std::cout << "ShrubberyCreationForm has been DESTROYED" << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other){
-	std::cout << "Copy constructor called" << std::endl;
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other): AForm(other._target, 145, 137){
+    std::cout << "Copy constructor called" << std::endl;
 	*this = other;
 }
 

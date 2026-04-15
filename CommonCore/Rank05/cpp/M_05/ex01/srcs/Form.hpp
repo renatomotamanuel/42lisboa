@@ -19,10 +19,12 @@ public:
 	Form(std::string name, int reqSign, int reqExec);
     Form &operator=(const Form &other);
 	int beSigned(Bureaucrat& f);
-	std::string getName();
-	int getSignGrade();
-	int getSign();
-	int getExecGrade();
+	std::string getName() const;
+	int getSignGrade() const;
+	int getSign() const;
+	int getExecGrade() const;
 };
+
+std::ostream& operator<<(std::ostream& os, Form& f);
 
 #endif

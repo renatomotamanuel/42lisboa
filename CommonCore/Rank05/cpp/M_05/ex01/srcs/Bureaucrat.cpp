@@ -45,9 +45,8 @@ Bureaucrat::~Bureaucrat() {
 	std::cout << "Bureaucrat has been DESTROYED" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &other) {
+Bureaucrat::Bureaucrat(const Bureaucrat &other) : _name(other._name), _grade(other._grade){
 	std::cout << "Copy constructor called" << std::endl;
-	*this = other;
 }
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other) {
@@ -63,11 +62,11 @@ std::ostream& operator<<(std::ostream& os, Bureaucrat& f){
 	return os;
 }
 
-std::string Bureaucrat::getName(){
+std::string Bureaucrat::getName() const{
 	return _name;
 }
 
-int Bureaucrat::getGrade(){
+int Bureaucrat::getGrade() const{
 	return _grade;
 }
 

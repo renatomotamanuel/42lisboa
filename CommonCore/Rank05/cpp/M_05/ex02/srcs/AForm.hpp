@@ -21,7 +21,7 @@ public:
 	int beSigned(Bureaucrat& f);
 	int execute(Bureaucrat const & executor) const;
 	std::string getName() const;
-	int getSignGrade();
+	int getSignGrade() const;
 	int getSign() const;
 	int getExecGrade() const;
 	virtual int executeAction(const Bureaucrat &f) const = 0;

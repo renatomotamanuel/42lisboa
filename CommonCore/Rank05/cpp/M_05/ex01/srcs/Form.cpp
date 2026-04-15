@@ -31,9 +31,9 @@ Form::~Form() {
 	std::cout << "Form has been DESTROYED" << std::endl;
 }
 
-Form::Form(const Form &other) : _reqSign(other._reqSign), _reqExec(other._reqExec){
+Form::Form(const Form &other) : _name(other._name), _reqSign(other._reqSign), _reqExec(other._reqExec){
 	std::cout << "Copy constructor called" << std::endl;
-	*this = other;
+    *this = other;
 }
 
 Form &Form::operator=(const Form &other) {
@@ -44,19 +44,19 @@ Form &Form::operator=(const Form &other) {
 	return *this;
 }
 
-std::string Form::getName(){
+std::string Form::getName() const{
 	return _name;
 }
 
-int Form::getSignGrade(){
+int Form::getSignGrade() const{
 	return _reqSign;
 }
 
-int Form::getSign(){
+int Form::getSign() const{
 	return _signed;
 }
 
-int Form::getExecGrade(){
+int Form::getExecGrade() const{
 	return _reqExec;
 }
 
@@ -71,7 +71,7 @@ std::ostream& operator<<(std::ostream& os, Form& f){
 
 int Form::beSigned(Bureaucrat& f){
 	try{
-		if(_reqSign > f.getGrade())
+		if(_reqSign < f.getGrade())
 			throw std::runtime_error("Form::GradeTooLowException");
 		else{
 			_signed = 1;

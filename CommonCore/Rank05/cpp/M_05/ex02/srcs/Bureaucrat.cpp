@@ -45,9 +45,8 @@ Bureaucrat::~Bureaucrat() {
 	std::cout << "Bureaucrat has been DESTROYED" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &other) {
+Bureaucrat::Bureaucrat(const Bureaucrat &other) : _name(other._name), _grade(other._grade){
 	std::cout << "Copy constructor called" << std::endl;
-	*this = other;
 }
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other) {

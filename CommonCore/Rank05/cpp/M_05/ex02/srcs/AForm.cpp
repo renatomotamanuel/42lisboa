@@ -31,9 +31,9 @@ AForm::~AForm() {
 	std::cout << "AForm has been DESTROYED" << std::endl;
 }
 
-AForm::AForm(const AForm &other) : _reqSign(other._reqSign), _reqExec(other._reqExec){
+AForm::AForm(const AForm &other) : _name(other._name), _reqSign(other._reqSign), _reqExec(other._reqExec){
 	std::cout << "Copy constructor called" << std::endl;
-	*this = other;
+    *this = other;
 }
 
 AForm &AForm::operator=(const AForm &other) {
@@ -48,7 +48,7 @@ std::string AForm::getName() const{
 	return _name;
 }
 
-int AForm::getSignGrade(){
+int AForm::getSignGrade() const{
 	return _reqSign;
 }
 
@@ -71,7 +71,7 @@ std::ostream& operator<<(std::ostream& os, AForm& f){
 
 int AForm::beSigned(Bureaucrat& f){
 	try{
-		if(_reqSign > f.getGrade())
+		if(_reqSign < f.getGrade())
 			throw std::runtime_error("AForm::GradeTooLowException");
 		else{
 			_signed = 1;
