@@ -1,5 +1,21 @@
 #include "ScalarConverter.hpp"
 
+ScalarConverter::ScalarConverter(){
+
+}
+
+ScalarConverter::~ScalarConverter() { 
+}
+
+ScalarConverter::ScalarConverter(const ScalarConverter &other){
+    std::cout << "Copy constructor called" << std::endl;
+	*this = other;
+}
+
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other) {
+	return *this;
+}
+
 static int detect(std::string str){
     int x = 0;
     if(!str[0])
