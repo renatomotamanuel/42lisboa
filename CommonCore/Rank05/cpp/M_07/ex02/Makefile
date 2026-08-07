@@ -1,4 +1,4 @@
-NAME = Iter
+NAME = Array
 CPP = c++
 FLAGS = -Wall -Wextra -Werror -g -std=c++98
 OBJ_DIR = objs
