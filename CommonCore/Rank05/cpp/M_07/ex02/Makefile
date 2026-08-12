@@ -7,7 +7,6 @@ SRC_DIR = srcs
 SRCS = main.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
-SRC = $(addprefix $(SRC_DIR)/, $(SRCS))
 
 all: $(NAME)
 
