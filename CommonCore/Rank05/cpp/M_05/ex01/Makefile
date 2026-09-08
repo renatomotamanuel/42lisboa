@@ -1,4 +1,4 @@
-NAME = Bureaucrat
+NAME = Maggots
 CPP = c++
 FLAGS = -Wall -Wextra -Werror -g -std=c++98
 OBJ_DIR = objs

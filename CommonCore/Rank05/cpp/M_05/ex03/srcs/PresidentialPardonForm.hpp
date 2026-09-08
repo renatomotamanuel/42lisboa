@@ -12,13 +12,13 @@ class Bureaucrat;
 class PresidentialPardonForm : public AForm{
 private:
     std::string _target;
+	int executeAction(const Bureaucrat &f) const;
 public:
 	PresidentialPardonForm();
 	~PresidentialPardonForm();
 	PresidentialPardonForm(const PresidentialPardonForm &other);
 	PresidentialPardonForm(std::string target);
     PresidentialPardonForm &operator=(const PresidentialPardonForm &other);
-	int executeAction(const Bureaucrat &f) const;
 };
 
 #endif

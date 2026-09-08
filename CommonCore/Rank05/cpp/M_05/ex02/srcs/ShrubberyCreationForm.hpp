@@ -11,13 +11,13 @@ class Bureaucrat;
 class ShrubberyCreationForm : public AForm{
 private:
     std::string _target;
+	int executeAction(const Bureaucrat &f) const;
 public:
 	ShrubberyCreationForm();
 	~ShrubberyCreationForm();
 	ShrubberyCreationForm(const ShrubberyCreationForm &other);
 	ShrubberyCreationForm(std::string target);
     ShrubberyCreationForm &operator=(const ShrubberyCreationForm &other);
-	int executeAction(const Bureaucrat &f) const;
 };
 
 #endif

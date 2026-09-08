@@ -58,7 +58,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other) {
 }
 
 std::ostream& operator<<(std::ostream& os, Bureaucrat& f){
-	std::cout << f.getName() << ", bureaucrat grade " << f.getGrade() << '.' << std::endl;
+	std::cout << f.getName() << ", bureaucrat grade " << f.getGrade() << '.';
 	return os;
 }
 
@@ -82,10 +82,10 @@ void Bureaucrat::executeForm(AForm const & form){
 		std::cout << _name << " executed " << form.getName() << '.' << std::endl;
 	else
 		std::cout << _name << " couldn't execute " << form.getName() << " because";
-	if(!form.getSign() && form.getExecGrade() > this->getGrade())
+	if(!form.getSign() && form.getExecGrade() < this->getGrade())
 		std::cout << " form isn't signed and grade is too low." << std::endl;
 	else if(!form.getSign())
 		std::cout << " form isn't signed" << std::endl;
-	else if(form.getExecGrade() > this->getGrade())
+	else if(form.getExecGrade() < this->getGrade())
 		std::cout << " grade is too low." << std::endl;
 }

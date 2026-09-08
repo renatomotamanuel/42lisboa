@@ -12,6 +12,7 @@ private:
 	bool _signed;
 	int const _reqSign;
 	int const _reqExec;
+	virtual int executeAction(const Bureaucrat &f) const = 0;
 public:
 	AForm();
 	virtual ~AForm();
@@ -24,7 +25,6 @@ public:
 	int getSignGrade() const;
 	int getSign() const;
 	int getExecGrade() const;
-	virtual int executeAction(const Bureaucrat &f) const = 0;
 };
 
 #endif

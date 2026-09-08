@@ -88,7 +88,7 @@ int AForm::execute(Bureaucrat const & executor) const{
 	try{
 		if(!_signed)
 			throw std::runtime_error("AForm::FormNotSignedException");
-		else if(_reqExec > executor.getGrade())
+		else if(_reqExec < executor.getGrade())
 			throw std::runtime_error("AForm::GradeTooLowException");
 		else{
 			executeAction(executor);
