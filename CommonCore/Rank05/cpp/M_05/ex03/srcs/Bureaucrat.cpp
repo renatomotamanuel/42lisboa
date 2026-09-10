@@ -6,48 +6,31 @@ Bureaucrat::Bureaucrat() : _name("Default"), _grade(1){
 
 Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name), _grade(grade){
 	std::cout << "Bureaucrat constructor called" << std::endl;
-	try{
-		if(grade > 150)
-			throw std::runtime_error("Bureaucrat::GradeTooLowException");
-		else if(grade < 1)
-			throw std::runtime_error("Bureaucrat::GradeTooHighException");
-	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-	}
+	if(grade > 150)
+		throw GradeTooLowException();
+	else if(grade < 1)
+		throw GradeTooHighException();
 }
 
-void Bureaucrat::decrementGrade(void){
-	try{
-		_grade++;
-		if(_grade > 150)
-			throw std::runtime_error("Bureaucrat::GradeTooLowException");
-	}
-	catch (std::exception & e){
-		_grade--;
-		std::cout << e.what() << std::endl;
-	}
+void Bureaucrat::decrementGrade(int decrement){
+	if(_grade + decrement> 150)
+		throw GradeTooLowException();
+	else
+		_grade += decrement;
 }
-
-void Bureaucrat::incrementGrade(void){
-	try{
-		_grade--;
-		if(_grade < 1)
-			throw std::runtime_error("Bureaucrat::GradeTooHighException");
-	}
-	catch (std::exception & e){
-		_grade++;
-		std::cout << e.what() << std::endl;
-	}
+void Bureaucrat::incrementGrade(int increment){
+	if(_grade - increment < 1)
+		throw GradeTooHighException();
+	else
+		_grade -= increment;
 }
 
 Bureaucrat::~Bureaucrat() {
 	std::cout << "Bureaucrat has been DESTROYED" << std::endl;
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &other) {
+Bureaucrat::Bureaucrat(const Bureaucrat &other) : _name(other._name), _grade(other._grade){
 	std::cout << "Copy constructor called" << std::endl;
-	*this = other;
 }
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other) {
@@ -69,6 +52,14 @@ std::string Bureaucrat::getName() const{
 
 int Bureaucrat::getGrade() const{
 	return _grade;
+}
+
+const char* Bureaucrat::GradeTooHighException::what() const throw() {
+	return "Bureaucrat::GradeTooHigh";
+}
+
+const char* Bureaucrat::GradeTooLowException::what() const throw() {
+	return "Bureaucrat::GradeTooLow";
 }
 
 void Bureaucrat::signForm(AForm& f){

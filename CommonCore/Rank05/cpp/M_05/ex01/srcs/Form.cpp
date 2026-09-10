@@ -7,24 +7,14 @@ Form::Form() : _name("Default"), _signed(0), _reqSign(1), _reqExec(1){
 
 Form::Form(std::string name, int reqSign, int reqExec) : _name(name), _signed(0), _reqSign(reqSign), _reqExec(reqExec){
 	std::cout << "Form constructor called" << std::endl;
-	try{
-		if(reqSign > 150)
-			throw std::runtime_error("Form::GradeTooLowException");
-		else if(reqSign < 1)
-			throw std::runtime_error("Form::GradeTooHighException");
-	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-	}
-	try{
-		if(reqExec > 150)
-			throw std::runtime_error("Form::GradeTooLowException");
-		else if(reqExec < 1)
-			throw std::runtime_error("Form::GradeTooHighException");
-	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-	}
+	if(reqSign > 150)
+		throw GradeTooLowException();
+	else if(reqSign < 1)
+		throw GradeTooHighException();
+	if(reqExec > 150)
+		throw GradeTooLowException();
+	else if(reqExec < 1)
+		throw GradeTooHighException();
 }
 
 Form::~Form() {
@@ -70,16 +60,18 @@ std::ostream& operator<<(std::ostream& os, Form& f){
 }
 
 int Form::beSigned(Bureaucrat& f){
-	try{
-		if(_reqSign < f.getGrade())
-			throw std::runtime_error("Form::GradeTooLowException");
-		else{
-			_signed = 1;
-			return 1;
-		}
+	if(_reqSign < f.getGrade())
+		throw GradeTooLowException();
+	else{
+		_signed = 1;
+		return 1;
 	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-		return (0);
-	}
+}
+
+const char* Form::GradeTooHighException::what() const throw() {
+	return "Form::GradeTooHigh";
+}
+
+const char* Form::GradeTooLowException::what() const throw() {
+	return "Form::GradeTooLow";
 }

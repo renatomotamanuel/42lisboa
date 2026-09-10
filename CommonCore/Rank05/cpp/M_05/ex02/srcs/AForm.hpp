@@ -25,6 +25,18 @@ public:
 	int getSignGrade() const;
 	int getSign() const;
 	int getExecGrade() const;
+	class GradeTooHighException : public std::exception{
+			public:
+				virtual const char *what() const throw();
+		};
+	class GradeTooLowException : public std::exception{
+			public:
+				virtual const char *what() const throw();
+		};
+	class FormNotSignedException : public std::exception{
+			public:
+				virtual const char *what() const throw();
+		};
 };
 
 #endif

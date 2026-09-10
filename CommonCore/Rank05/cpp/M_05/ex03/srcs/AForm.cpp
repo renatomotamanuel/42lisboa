@@ -7,24 +7,14 @@ AForm::AForm() : _name("Default"), _signed(0), _reqSign(1), _reqExec(1){
 
 AForm::AForm(std::string name, int reqSign, int reqExec) : _name(name), _signed(0), _reqSign(reqSign), _reqExec(reqExec){
 	std::cout << "AForm constructor called" << std::endl;
-	try{
-		if(reqSign > 150)
-			throw std::runtime_error("AForm::GradeTooLowException");
-		else if(reqSign < 1)
-			throw std::runtime_error("AForm::GradeTooHighException");
-	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-	}
-	try{
-		if(reqExec > 150)
-			throw std::runtime_error("AForm::GradeTooLowException");
-		else if(reqExec < 1)
-			throw std::runtime_error("AForm::GradeTooHighException");
-	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-	}
+	if(reqSign > 150)
+		throw GradeTooLowException();
+	else if(reqSign < 1)
+		throw GradeTooHighException();
+	if(reqExec > 150)
+		throw GradeTooLowException();
+	else if(reqExec < 1)
+		throw GradeTooHighException();
 }
 
 AForm::~AForm() {
@@ -48,7 +38,7 @@ std::string AForm::getName() const{
 	return _name;
 }
 
-int AForm::getSignGrade(){
+int AForm::getSignGrade() const{
 	return _reqSign;
 }
 
@@ -70,33 +60,34 @@ std::ostream& operator<<(std::ostream& os, AForm& f){
 }
 
 int AForm::beSigned(Bureaucrat& f){
-	try{
-		if(_reqSign < f.getGrade())
-			throw std::runtime_error("AForm::GradeTooLowException");
-		else{
-			_signed = 1;
-			return 1;
-		}
-	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-		return (0);
+	if(_reqSign < f.getGrade())
+		throw GradeTooLowException();
+	else{
+		_signed = 1;
+		return 1;
 	}
 }
 
 int AForm::execute(Bureaucrat const & executor) const{
-	try{
-		if(!_signed)
-			throw std::runtime_error("AForm::FormNotSignedException");
-		else if(_reqExec < executor.getGrade())
-			throw std::runtime_error("AForm::GradeTooLowException");
-		else{
-			executeAction(executor);
-			return 1;
-		}
-	}
-	catch (std::exception & e){
-		std::cout << e.what() << std::endl;
-		return (0);
+	if(!_signed)
+		throw FormNotSignedException();
+	else if(_reqExec < executor.getGrade())
+		throw GradeTooLowException();
+	else{
+		executeAction(executor);
+		return 1;
 	}
 }
+
+const char* AForm::GradeTooHighException::what() const throw() {
+	return "AForm::GradeTooHigh";
+}
+
+const char* AForm::GradeTooLowException::what() const throw() {
+	return "AForm::GradeTooLow";
+}
+
+const char* AForm::FormNotSignedException::what() const throw() {
+	return "AForm::NotSigned";
+}
+

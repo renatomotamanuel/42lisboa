@@ -17,8 +17,16 @@ public:
     Bureaucrat &operator=(const Bureaucrat &other);
 	std::string getName() const;
 	int getGrade() const;
-	void incrementGrade(void);
-	void decrementGrade(void);
+	void incrementGrade(int increment);
+	void decrementGrade(int decrement);
+	class GradeTooHighException : public std::exception{
+			public:
+				virtual const char *what() const throw();
+		};
+	class GradeTooLowException : public std::exception{
+			public:
+				virtual const char *what() const throw();
+		};
 	void signForm(Form& f);
 };
 std::ostream& operator<<(std::ostream& os, Bureaucrat& f);
