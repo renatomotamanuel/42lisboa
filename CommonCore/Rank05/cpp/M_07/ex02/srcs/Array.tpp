@@ -5,7 +5,7 @@ Array<T>::Array() : _arr(NULL), _max(0){}
 
 template <typename T>
 Array<T>::Array(unsigned int n){
-    _arr = new T[n];
+    _arr = new T[n]();
     _max = n;
 }
 template <typename T>

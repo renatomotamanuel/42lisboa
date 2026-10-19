@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <string>
+#include <cstddef>
 
 template <typename T, typename F>
 void iter(T* arr, const size_t len, F func){

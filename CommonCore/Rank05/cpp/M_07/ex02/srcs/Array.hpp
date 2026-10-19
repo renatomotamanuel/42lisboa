@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <cstdlib>
+# include <stdexcept>
 
 
 template<typename T>class Array{
