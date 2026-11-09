@@ -13,7 +13,6 @@ int main()
     mstack.push(3);
     mstack.push(5);
     mstack.push(737);
-    //[...]
     mstack.push(0);
     MutantStack<int>::iterator it = mstack.begin();
     MutantStack<int>::iterator ite = mstack.end();
@@ -46,5 +45,9 @@ int main()
     std::cout << *it2 << std::endl;
     ++it2;
     }
+    std::cout << std::endl << "const_iterator" << std::endl << std::endl;
+    const MutantStack<int> &cref = mstack;
+    for (MutantStack<int>::const_iterator c = cref.begin(); c != cref.end(); ++c)
+        std::cout << *c << std::endl;
     return 0;
 }

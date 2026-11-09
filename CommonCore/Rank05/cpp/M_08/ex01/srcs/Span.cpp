@@ -2,7 +2,7 @@
 
 Span::Span() : _maxSize(10){}
 
-Span::Span(int maxSize) : _maxSize(maxSize){}
+Span::Span(unsigned int maxSize) : _maxSize(maxSize){}
 
 Span::~Span() {}
 
@@ -21,7 +21,8 @@ Span &Span::operator=(const Span &other) {
 void Span::addNumber(int val){
     if(_values.size() >= _maxSize)
         throw std::runtime_error("Span: Vector is full.");
-    _values.push_back(val);
+    else
+        _values.push_back(val);
 }
 
 int Span::shortestSpan(){

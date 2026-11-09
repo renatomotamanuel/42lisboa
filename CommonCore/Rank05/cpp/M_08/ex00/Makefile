@@ -1,12 +1,13 @@
 NAME = easyFind
 CPP = c++
-FLAGS = -Wall -Wextra -Werror -g -std=c++98
+FLAGS = -Wall -Wextra -Werror -g -std=c++98 -MMD -MP
 OBJ_DIR = objs
 SRC_DIR = srcs
 
 SRCS = main.cpp
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
+DEP = $(OBJ:.o=.d)
 
 all: $(NAME)
 
@@ -26,5 +27,7 @@ fclean: clean
 	@rm -rf $(NAME)
 	
 re: fclean all
+
+-include $(DEP)
 
 .PHONY: all fclean clean re
