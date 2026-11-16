@@ -57,7 +57,7 @@ std::string RPN::calc(std::string input){
 
 	while(in >> token){
 		if(token.length() == 1){
-			if(std::isdigit(static_cast<int>(token[0])))
+			if(std::isdigit(static_cast<unsigned char>(token[0])))
 				_stack.push(token[0] - 48);
 			else if(isOperator(token[0])){
 				if(_stack.size() < 2)
