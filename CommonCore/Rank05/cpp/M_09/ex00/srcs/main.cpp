@@ -2,6 +2,6 @@
 
 int main(int ac, char **av){
     if(ac != 2)
-        return std::cout << "Wrong usage." << std::endl, 0;
+        return std::cerr << "Error: could not open file." << std::endl, 1;
     return parse(av[1]);
 }

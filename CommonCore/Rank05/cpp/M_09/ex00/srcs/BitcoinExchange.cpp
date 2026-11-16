@@ -98,13 +98,16 @@ int floatParse(float &value, std::string &val){
     return 0;
 }
 
-std::map<std::string, float> mountDb(std::ifstream &file){
+std::map<std::string, float> mountDb(void){
+    std::ifstream file("data.csv");
     std::map<std::string, float> db;
     std::string line;
     std::string val;
     std::string date;
     float value;
 
+    if(!file.is_open())
+        return std::cerr << "Error: could not open database." << std::endl, db;
     std::getline(file, line);
     while(std::getline(file, line)){
         value = 0;
@@ -122,14 +125,79 @@ std::map<std::string, float> mountDb(std::ifstream &file){
     return db;
 }
 
+/* void printDb(std::map<std::string, float> db){
+    std::map<std::string, float>::iterator it;
+
+    for(it = db.begin(); it != db.end(); it++){
+        std::cout << "date: " << it->first << "   " << "value: " << it->second << std::endl;
+    }
+} */
+
+int inputParse(std::string &line, std::string &date, float &value){
+    std::string val;
+    std::string ret;
+    size_t st;
+    size_t pos;
+
+    pos = line.find('|');
+	if (pos == std::string::npos || line.size() < 14 || line[10] != ' ' || line[11] != '|' || line[12] != ' ')
+		return std::cerr << "Error: bad input => " << line << std::endl, 1;
+	date = line.substr(0, 10);
+	if (dateParse(date))
+		return std::cerr << "Error: bad input => " << date << std::endl, 1;
+	val = line.substr(pos + 1);
+	st = val.find_first_not_of(" \t");
+	if (st == std::string::npos)
+		return std::cerr << "Error: bad input => " << line << std::endl, 1;
+	ret = val.substr(st);
+	if (floatParse(value, ret))
+		return std::cerr << "Error: bad input => " << line << std::endl, 1;
+	if (value < 0)
+		return std::cerr << "Error: not a positive number." << std::endl, 1;
+	else if (value > 1000)
+		return std::cerr << "Error: too large a number." << std::endl, 1;
+	return 0;
+}
+
+
+float convert(const std::map<std::string, float> &db, const std::string &date){
+	std::map<std::string, float>::const_iterator it = db.upper_bound(date);
+
+	if (it == db.begin())
+		return -1;
+	--it;
+	return it->second;
+}
+
+int inputManage(std::map<std::string, float> db, std::ifstream &file){
+    std::string line;
+    std::string date;
+    float value;
+	float ret;
+
+    if(!std::getline(file, line) || line != "date | value")
+        return std::cerr << "Error: bad input => " << line << std::endl, 1;
+    while(std::getline(file, line)){
+        if(inputParse(line, date, value))
+			continue;
+        ret = convert(db, date);
+		if (ret < 0){
+			std::cerr << "Error: " << date << " not in the database" << std::endl;
+			continue ;
+		}
+		std::cout << date << " => " << value << " = " << (value * ret) << std::endl;
+    }
+	return 0;
+}
+
 int parse(char *input){
     std::ifstream file(input);
     std::map<std::string, float> db;
 
     if(!file.is_open())
-        return std::cout << "Error: Could'nt open file." << std::endl, 1;
-    db = mountDb(file);
+        return std::cerr << "Error: could not open file." << std::endl, 1;
+    db = mountDb();
     if(db.empty())
         return 1;
-    return 0;
+    return inputManage(db, file);
 }
