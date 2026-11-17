@@ -22,23 +22,44 @@ static int isOperator(char c){
 	return 0;
 }
 
-static int operation(int fst, int snd, int &ret, char c){
+static int operation(long long fst, long long snd, long long &ret, char c){
 	switch(c){
 		case '+':{
+			if((snd > 0 && fst > LLONG_MAX - snd) || (snd > 0 && fst < LLONG_MIN - snd))
+				return std::cerr << "Error: overflow." << std::endl, 1;
 			ret = fst + snd;
 			return 0;
 		}
 		case '-':{
+			if((snd > 0 && fst > LLONG_MAX + snd) || (snd > 0 && fst < LLONG_MIN + snd))
+				return std::cerr << "Error: overflow." << std::endl, 1;
 			ret = fst - snd;
 			return 0;
 		}
 		case '*':{
+			int ov = 0;
+			if(fst > 0){
+				if(snd > 0)
+					ov = fst > LLONG_MAX / snd;
+				else
+					ov = snd < LLONG_MIN / fst;
+			}
+			else{
+				if(snd > 0)
+					ov = fst < LLONG_MIN / snd;
+				else
+					ov = (fst != 0 && snd < LLONG_MAX / fst);
+			}
+			if(ov)
+				return std::cerr << "Error: overflow." << std::endl, 1;
 			ret = fst * snd;
 			return 0;
 		}
 		case '/':{
 			if(!snd)
 				return std::cerr << "Error: can not divide by 0." << std::endl, 1;
+			if(fst == LLONG_MIN && snd == -1)
+				return std::cerr << "Error: overflow." << std::endl, 1;
 			ret = fst / snd;
 			return 0;
 		}
@@ -51,9 +72,9 @@ static int operation(int fst, int snd, int &ret, char c){
 std::string RPN::calc(std::string input){
 	std::istringstream in(input);
 	std::string token;
-	int fst;
-	int snd;
-	int ret;
+	long long fst;
+	long long snd;
+	long long ret;
 
 	while(in >> token){
 		if(token.length() == 1){

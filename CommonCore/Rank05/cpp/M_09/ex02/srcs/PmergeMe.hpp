@@ -16,7 +16,8 @@ class PmergeMe{
 private:
 	std::deque<int> _deq;
 	std::vector<int> _vec;
-
+	double _vecTime;
+	double _deqTime;
 public:
 	PmergeMe();
 	PmergeMe(int ac, char **av);
@@ -26,6 +27,12 @@ public:
 	int sortVec(void);
 	void sortWinnersVec(std::vector<std::pair<int, int> > &pairs, size_t left, size_t right);
 	void mergeVec(std::vector<std::pair<int, int> > &pairs, size_t left, size_t right, size_t mid);
+	void printVec(void);
+	void printTimeTable(void);
+
+	int sortDeq(void);
+	void sortWinnersDeq(std::deque<std::pair<int, int> > &pairs, size_t left, size_t right);
+	void mergeDeq(std::deque<std::pair<int, int> > &pairs, size_t left, size_t right, size_t mid);
 };
 
 int parse(int ac, char **av);

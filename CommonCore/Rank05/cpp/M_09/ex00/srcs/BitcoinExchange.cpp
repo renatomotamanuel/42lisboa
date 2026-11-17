@@ -88,10 +88,34 @@ int dateParse(const std::string& date){
 	return 0;
 }
 
+int floatParseSimple(float &value, std::string &val){
+    char *end = NULL;
+
+    value = static_cast<float>(strtod(val.c_str(), &end));
+    if(end == val.c_str() || *end != 0)
+        return 1;
+    return 0;
+}
 
 int floatParse(float &value, std::string &val){
     char *end = NULL;
+	int nbr;
+	int dec;
 
+	if(val.empty())
+		return 1;
+	for(size_t i = 0; i < val.size(); i++){
+		if(val[i] == '-' && !i)
+			continue;
+		if(val[i] == '.')
+			dec++;
+		else if(isdigit(static_cast<unsigned char>(val[i])))
+			nbr++;
+		else
+			return 1;
+	}
+	if(!nbr || dec > 1)
+		return 1;
     value = static_cast<float>(strtod(val.c_str(), &end));
     if(end == val.c_str() || *end != 0)
         return 1;
@@ -116,7 +140,7 @@ std::map<std::string, float> mountDb(void){
             continue;
         date = line.substr(0, pos);
         val = line.substr(pos + 1);
-        if(floatParse(value, val))
+        if(floatParseSimple(value, val))
             continue ;
         if(dateParse(date))
             continue;
@@ -198,6 +222,6 @@ int parse(char *input){
         return std::cerr << "Error: could not open file." << std::endl, 1;
     db = mountDb();
     if(db.empty())
-        return 1;
+        return std::cerr << "Error: mounting database." << std::endl,1;
     return inputManage(db, file);
 }
