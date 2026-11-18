@@ -9,7 +9,6 @@ RPN::RPN(const RPN &other){
 }
 
 RPN &RPN::operator=(const RPN &other) {
-	std::cout << "Copy assignment operator called" << std::endl;
 	if(this != &other){
         _stack = other._stack;
     }

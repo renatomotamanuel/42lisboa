@@ -6,13 +6,26 @@ PmergeMe::PmergeMe(int ac, char **av){
 	std::string line;
 	int nbr;
 	char *end;
+	clock_t st = std::clock();
+	clock_t ender;
 
+	_vecTime = 0;
+	_deqTime = 0;
+	for(int i = 1; i < ac; i++){
+		line = av[i];
+		nbr = strtol(line.c_str(), &end, 10);
+		_vec.push_back(nbr);
+	}
+	ender = std::clock();
+	_vecConstruct = double(ender - st) / CLOCKS_PER_SEC * 1000000.0;
+	st = std::clock();
 	for(int i = 1; i < ac; i++){
 		line = av[i];
 		nbr = strtol(line.c_str(), &end, 10);
 		_deq.push_back(nbr);
-		_vec.push_back(nbr);
 	}
+	ender = std::clock();
+	_deqConstruct = double(ender - st) / CLOCKS_PER_SEC * 1000000.0;
 }
 
 PmergeMe::~PmergeMe() {}
@@ -22,10 +35,13 @@ PmergeMe::PmergeMe(const PmergeMe &other){
 }
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
-	std::cout << "Copy assignment operator called" << std::endl;
 	if(this != &other){
         _deq = other._deq;
         _vec = other._vec;
+		_deqTime = other._deqTime;
+        _vecTime = other._vecTime;
+		_deqConstruct = other._deqConstruct;
+        _vecConstruct = other._vecConstruct;
     }
 	return *this;
 }
@@ -41,46 +57,19 @@ void PmergeMe::printTimeTable(void){
 	std::cout << "Time to process a range of " << _deq.size() << " elements with std::deque : " << std::fixed << std::setprecision(5) << _deqTime << " us" << std::endl;
 }
 
-void PmergeMe::mergeVec(std::vector<std::pair<int, int> > &pairs, size_t left, size_t right, size_t mid){
-	std::vector<std::pair<int, int> > temp;
-	size_t fst;
-	size_t snd;
-
-	temp.reserve(right - left + 1);
-	fst = left;
-	snd = mid + 1;
-	while(fst <= mid && snd <= right){
-		if(pairs[fst].second <= pairs[snd].second){
-			temp.push_back(pairs[fst]);
-			fst++;
-		}
-		else{
-			temp.push_back(pairs[snd]);
-			snd++;
-		}
+int searchVec(std::vector<std::pair<int, int> > &vec, int value, size_t bound){
+	if(vec.empty())
+		return 0;
+	int l = 0;
+	int r = static_cast<int>(bound);
+	while(l < r){
+		int mid = l + (r - l) / 2;
+		if(vec[mid].first < value)
+			l = mid + 1;
+		else
+			r = mid;
 	}
-	while(fst <= mid){
-		temp.push_back(pairs[fst]);
-		fst++;
-	}
-	while(snd <= right){
-		temp.push_back(pairs[snd]);
-		snd++;
-	}
-	for(size_t i = 0; i < temp.size(); ++i)
-		pairs[left + i] = temp[i];
-}
-
-
-void PmergeMe::sortWinnersVec(std::vector<std::pair<int, int> > &pairs, size_t left, size_t right){
-	size_t mid;
-
-	if(left >= right)
-		return ;
-	mid = left + (right - left) / 2;
-	sortWinnersVec(pairs, left, mid);
-	sortWinnersVec(pairs, mid + 1, right);
-	mergeVec(pairs, left, right, mid);
+	return l;
 }
 
 std::vector<size_t> jacobVec(size_t len){
@@ -122,78 +111,67 @@ std::vector<size_t> jacobVec(size_t len){
 	return order;
 }
 
-int searchVec(std::vector<int>& vec, int value, size_t bound){
-	if(vec.empty())
-		return 0;
-	if(bound >= vec.size())
-		bound = vec.size() - 1;
-	int l = 0;
-	int r = static_cast<int>(bound);
-	while(l <= r){
-		int mid = l + (r - l) / 2;
-		if(vec[mid] < value)
-			l = mid + 1;
-		else
-			r = mid - 1;
+void fordJohnsonVec(std::vector<std::pair<int, int> > &vec){
+	std::vector<std::pair<int, int> > winners;
+	std::vector<std::pair<int, int> > losers;
+	std::vector<std::pair<int, int> > sort;
+
+	if(vec.size() < 2)
+		return ;
+	size_t n = vec.size();
+	size_t mid = vec.size() / 2;
+	for(size_t i = 0; i < mid; i++){
+		std::pair<int,int> l = vec[2 * i];
+		std::pair<int,int> w = vec[2 * i + 1];
+		if(l.first > w.first)
+			std::swap(l, w);
+		losers.push_back(l);
+		winners.push_back(w);
+		sort.push_back(std::make_pair(w.first, static_cast<int>(i)));
 	}
-	return l;
+	fordJohnsonVec(sort);
+	std::vector<std::pair<int, int> > main;
+	main.push_back(losers[sort[0].second]);
+	for(size_t i = 0; i < mid; i++)
+		main.push_back(winners[sort[i].second]);
+	std::vector<size_t> order = jacobVec(mid - 1 + (n % 2));
+	for(size_t i = 0; i < order.size(); i++){
+		size_t idx = order[i];
+		std::pair<int, int>val;
+		size_t end = main.size();
+		if(idx < mid - 1){
+			val = losers[sort[idx + 1].second];
+			int id = winners[sort[idx + 1].second].second;
+			end = 0;
+			while(main[end].second != id)
+				end++;
+		}
+		else
+			val = vec[n -1];
+		main.insert(main.begin() + searchVec(main, val.first, end), val);
+	}
+	vec = main;
 }
 
 int PmergeMe::sortVec(void){
 	clock_t st = std::clock();
 	clock_t end;
-	std::vector<std::pair<int, int> > pairs;
-	int fst;
-	int snd;
-	int offset;
+	std::vector<std::pair<int, int> > vec;
 
-	offset = -1;
 	if(_vec.size() < 2){
 		end = std::clock();
 		_vecTime = double(end - st) / CLOCKS_PER_SEC * 1000000.0;
+		_vecTime += _vecConstruct;
 		return 0;
 	}
-	if(_vec.size() % 2 != 0)
-		offset = _vec[_vec.size() - 1];
-	for(size_t i = 0; (i + 1) < _vec.size(); i += 2){
-		fst = _vec[i];
-		snd = _vec[i + 1];
-		if(fst > snd)
-			pairs.push_back(std::make_pair(snd, fst));
-		else
-			pairs.push_back(std::make_pair(fst, snd));
-	}
-	sortWinnersVec(pairs, 0, pairs.size() - 1);
-	_vec.clear();
-	std::vector<size_t> order;
-	std::vector<std::pair<int, int> > dups;
-	_vec.push_back(pairs[0].first);
-	_vec.push_back(pairs[0].second);
-	for(size_t i = 1; i < pairs.size(); i++){
-		_vec.push_back(pairs[i].second);
-		dups.push_back(std::make_pair(pairs[i].first, pairs[i].second));
-	}
-	if(offset != -1)
-		dups.push_back(std::make_pair(offset, -1));
-	order = jacobVec(dups.size());
-	for(size_t i = 0; i < order.size(); ++i){
-		size_t j = order[i];
-		int val = dups[j].first;
-		int valWin = dups[j].second;
-		size_t bound = _vec.size() - 1;
-		if(valWin != -1){
-			for(size_t k = 0; k < _vec.size(); ++k){
-				if(_vec[k] == valWin){
-					bound = k;
-					break ;
-				}
-			}
-		}
-		int pos = searchVec(_vec, val, bound);
-		_vec.insert(_vec.begin() + pos, val);
-	}
+	for(size_t i = 0; i < _vec.size(); i++)
+		vec.push_back(std::make_pair(_vec[i], static_cast<int>(i)));
+	fordJohnsonVec(vec);
+	for(size_t i = 0; i < vec.size(); i++)
+		_vec[i] = vec[i].first;
 	end = std::clock();
 	_vecTime = double(end - st) / CLOCKS_PER_SEC * 1000000.0;
+	_vecTime += _vecConstruct;
 	return 0;
 }
 
@@ -202,7 +180,7 @@ int isNbr(std::string line){
 		return std::cerr << "Error: arguments can not be empty" << std::endl, 1;
 	for(size_t i = 0; i < line.length(); i++){
 		if(!isdigit(static_cast<unsigned char>(line[i])))
-			return 1;
+			return std::cerr << "Error: arguments must be numeric." << std::endl, 1;
 	}
 	return 0;
 }
@@ -211,13 +189,12 @@ int isValid(std::string line){
 	char *end;
 	long nbr = strtol(line.c_str(), &end, 10);
 	if(*end != '\0' || nbr < 0 || nbr > INT_MAX)
-		return 1;
+		return std::cerr << "Error: arguments must be int." << std::endl, 1;
 	return 0;
 }
 
 int parse(int ac, char **av){
 	std::string line;
-	std::deque<int> deq;
 	int nbr;
 	char *end;
 
@@ -227,51 +204,23 @@ int parse(int ac, char **av){
 			return 1;
 		else if(isValid(line))
 			return 1;
-		nbr = strtol(line.c_str(), &end, 10);
-		deq.push_back(nbr);
 	}
 	return 0;
 }
 
-void PmergeMe::mergeDeq(std::deque<std::pair<int, int> > &pairs, size_t left, size_t right, size_t mid){
-	std::deque<std::pair<int, int> > temp;
-	size_t fst;
-	size_t snd;
-
-	fst = left;
-	snd = mid + 1;
-	while(fst <= mid && snd <= right){
-		if(pairs[fst].second <= pairs[snd].second){
-			temp.push_back(pairs[fst]);
-			fst++;
-		}
-		else{
-			temp.push_back(pairs[snd]);
-			snd++;
-		}
+int searchDeq(std::deque<std::pair<int, int> > &deq, int value, size_t bound){
+	if(deq.empty())
+		return 0;
+	int l = 0;
+	int r = static_cast<int>(bound);
+	while(l < r){
+		int mid = l + (r - l) / 2;
+		if(deq[mid].first < value)
+			l = mid + 1;
+		else
+			r = mid;
 	}
-	while(fst <= mid){
-		temp.push_back(pairs[fst]);
-		fst++;
-	}
-	while(snd <= right){
-		temp.push_back(pairs[snd]);
-		snd++;
-	}
-	for(size_t i = 0; i < temp.size(); ++i)
-		pairs[left + i] = temp[i];
-}
-
-
-void PmergeMe::sortWinnersDeq(std::deque<std::pair<int, int> > &pairs, size_t left, size_t right){
-	size_t mid;
-
-	if(left >= right)
-		return ;
-	mid = left + (right - left) / 2;
-	sortWinnersDeq(pairs, left, mid);
-	sortWinnersDeq(pairs, mid + 1, right);
-	mergeDeq(pairs, left, right, mid);
+	return l;
 }
 
 std::deque<size_t> jacobDeq(size_t len){
@@ -313,77 +262,66 @@ std::deque<size_t> jacobDeq(size_t len){
 	return order;
 }
 
-int searchDeq(std::deque<int>& deq, int value, size_t bound){
-	if(deq.empty())
-		return 0;
-	if(bound >= deq.size())
-		bound = deq.size() - 1;
-	int l = 0;
-	int r = static_cast<int>(bound);
-	while(l <= r){
-		int mid = l + (r - l) / 2;
-		if(deq[mid] < value)
-			l = mid + 1;
-		else
-			r = mid - 1;
+void fordJohnsonDeq(std::deque<std::pair<int, int> > &deq){
+	std::deque<std::pair<int, int> > winners;
+	std::deque<std::pair<int, int> > losers;
+	std::deque<std::pair<int, int> > sort;
+
+	if(deq.size() < 2)
+		return ;
+	size_t n = deq.size();
+	size_t mid = deq.size() / 2;
+	for(size_t i = 0; i < mid; i++){
+		std::pair<int,int> l = deq[2 * i];
+		std::pair<int,int> w = deq[2 * i + 1];
+		if(l.first > w.first)
+			std::swap(l, w);
+		losers.push_back(l);
+		winners.push_back(w);
+		sort.push_back(std::make_pair(w.first, static_cast<int>(i)));
 	}
-	return l;
+	fordJohnsonDeq(sort);
+	std::deque<std::pair<int, int> > main;
+	main.push_back(losers[sort[0].second]);
+	for(size_t i = 0; i < mid; i++)
+		main.push_back(winners[sort[i].second]);
+	std::deque<size_t> order = jacobDeq(mid - 1 + (n % 2));
+	for(size_t i = 0; i < order.size(); i++){
+		size_t idx = order[i];
+		std::pair<int, int>val;
+		size_t end = main.size();
+		if(idx < mid - 1){
+			val = losers[sort[idx + 1].second];
+			int id = winners[sort[idx + 1].second].second;
+			end = 0;
+			while(main[end].second != id)
+				end++;
+		}
+		else
+			val = deq[n -1];
+		main.insert(main.begin() + searchDeq(main, val.first, end), val);
+	}
+	deq = main;
 }
 
 int PmergeMe::sortDeq(void){
 	clock_t st = std::clock();
 	clock_t end;
-	std::deque<std::pair<int, int> > pairs;
-	int fst;
-	int snd;
-	int offset;
+	std::deque<std::pair<int, int> > deq;
 
-	offset = -1;
 	if(_deq.size() < 2){
 		end = std::clock();
 		_deqTime = double(end - st) / CLOCKS_PER_SEC * 1000000.0;
+		_deqTime += _deqConstruct;
 		return 0;
 	}
-	if(_deq.size() % 2 != 0)
-		offset = _deq[_deq.size() - 1];
-	for(size_t i = 0; (i + 1) < _deq.size(); i += 2){
-		fst = _deq[i];
-		snd = _deq[i + 1];
-		if(fst > snd)
-			pairs.push_back(std::make_pair(snd, fst));
-		else
-			pairs.push_back(std::make_pair(fst, snd));
-	}
-	sortWinnersDeq(pairs, 0, pairs.size() - 1);
-	_deq.clear();
-	std::deque<size_t> order;
-	std::deque<std::pair<int, int> > dups;
-	_deq.push_back(pairs[0].first);
-	_deq.push_back(pairs[0].second);
-	for(size_t i = 1; i < pairs.size(); i++){
-		_deq.push_back(pairs[i].second);
-		dups.push_back(std::make_pair(pairs[i].first, pairs[i].second));
-	}
-	if(offset != -1)
-		dups.push_back(std::make_pair(offset, -1));
-	order = jacobDeq(dups.size());
-	for(size_t i = 0; i < order.size(); ++i){
-		size_t j = order[i];
-		int val = dups[j].first;
-		int valWin = dups[j].second;
-		size_t bound = _deq.size() - 1;
-		if(valWin != -1){
-			for(size_t k = 0; k < _deq.size(); ++k){
-				if(_deq[k] == valWin){
-					bound = k;
-					break ;
-				}
-			}
-		}
-		int pos = searchDeq(_deq, val, bound);
-		_deq.insert(_deq.begin() + pos, val);
-	}
+	for(size_t i = 0; i < _deq.size(); i++)
+		deq.push_back(std::make_pair(_deq[i], static_cast<int>(i)));
+	fordJohnsonDeq(deq);
+	for(size_t i = 0; i < deq.size(); i++)
+		_deq[i] = deq[i].first;
 	end = std::clock();
 	_deqTime = double(end - st) / CLOCKS_PER_SEC * 1000000.0;
+	_deqTime += _deqConstruct;
 	return 0;
 }

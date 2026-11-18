@@ -3,7 +3,6 @@
 
 # include <iostream>
 # include <iomanip>
-# include <exception>
 # include <climits>
 # include <cstdlib>
 # include <cctype>
@@ -18,6 +17,8 @@ private:
 	std::vector<int> _vec;
 	double _vecTime;
 	double _deqTime;
+	double _vecConstruct;
+	double _deqConstruct;
 public:
 	PmergeMe();
 	PmergeMe(int ac, char **av);
@@ -25,14 +26,9 @@ public:
 	PmergeMe &operator=(const PmergeMe &other);
 	~PmergeMe();
 	int sortVec(void);
-	void sortWinnersVec(std::vector<std::pair<int, int> > &pairs, size_t left, size_t right);
-	void mergeVec(std::vector<std::pair<int, int> > &pairs, size_t left, size_t right, size_t mid);
+	int sortDeq(void);
 	void printVec(void);
 	void printTimeTable(void);
-
-	int sortDeq(void);
-	void sortWinnersDeq(std::deque<std::pair<int, int> > &pairs, size_t left, size_t right);
-	void mergeDeq(std::deque<std::pair<int, int> > &pairs, size_t left, size_t right, size_t mid);
 };
 
 int parse(int ac, char **av);
