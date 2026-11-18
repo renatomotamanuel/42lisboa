@@ -99,8 +99,8 @@ int floatParseSimple(float &value, std::string &val){
 
 int floatParse(float &value, std::string &val){
     char *end = NULL;
-	int nbr;
-	int dec;
+	int nbr = 0;
+	int dec = 0;
 
 	if(val.empty())
 		return 1;
@@ -116,6 +116,8 @@ int floatParse(float &value, std::string &val){
 	}
 	if(!nbr || dec > 1)
 		return 1;
+	if(val == "-0")
+		val = "0";
     value = static_cast<float>(strtod(val.c_str(), &end));
     if(end == val.c_str() || *end != 0)
         return 1;

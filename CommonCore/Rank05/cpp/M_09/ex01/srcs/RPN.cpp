@@ -24,13 +24,13 @@ static int isOperator(char c){
 static int operation(long long fst, long long snd, long long &ret, char c){
 	switch(c){
 		case '+':{
-			if((snd > 0 && fst > LLONG_MAX - snd) || (snd > 0 && fst < LLONG_MIN - snd))
+			if((snd > 0 && fst > LLONG_MAX - snd) || (snd < 0 && fst < LLONG_MIN - snd))
 				return std::cerr << "Error: overflow." << std::endl, 1;
 			ret = fst + snd;
 			return 0;
 		}
 		case '-':{
-			if((snd > 0 && fst > LLONG_MAX + snd) || (snd > 0 && fst < LLONG_MIN + snd))
+			if((snd < 0 && fst > LLONG_MAX + snd) || (snd > 0 && fst < LLONG_MIN + snd))
 				return std::cerr << "Error: overflow." << std::endl, 1;
 			ret = fst - snd;
 			return 0;
