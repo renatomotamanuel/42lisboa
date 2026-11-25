@@ -1,4 +1,4 @@
-LOGIN = <login>
+LOGIN = rmota-ma
 DATA_DIR = /home/$(LOGIN)/data
 COMPOSE  = docker compose -f srcs/docker-compose.yml
 

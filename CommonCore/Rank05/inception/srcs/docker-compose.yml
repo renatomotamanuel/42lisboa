@@ -1,0 +1,76 @@
+services:
+  mariadb:
+    build: ./mariadb
+    image: mariadb
+    container_name: mariadb
+    env_file:
+     - .env
+    secrets:
+     - db_password
+     - db_root_password
+    volumes:
+     - mariadb_data:/var/lib/mysql
+    networks:
+     - inception
+    restart: always
+
+  wordpress:
+    build: ./wordpress
+    image: wordpress
+    container_name: wordpress
+    env_file:
+      - .env
+    secrets:
+      - db_password
+      - credentials
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception
+    restart: always
+
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        DOMAIN_NAME: ${DOMAIN_NAME}
+    image: nginx
+    container_name: nginx
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception
+    restart: always
+
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  credentials:
+    file: ../secrets/credentials.txt
+
+networks:
+  inception:
+    name: inception
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/rmota-ma/data/mariadb
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/rmota-ma/data/wordpress
